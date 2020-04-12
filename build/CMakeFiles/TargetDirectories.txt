@@ -1,0 +1,6 @@
+/home/vermia/pengo/build/CMakeFiles/edit_cache.dir
+/home/vermia/pengo/build/CMakeFiles/rebuild_cache.dir
+/home/vermia/pengo/build/CMakeFiles/Pengo.dir
+/home/vermia/pengo/build/CMakeFiles/libClases.dir
+/home/vermia/pengo/build/clases/CMakeFiles/edit_cache.dir
+/home/vermia/pengo/build/clases/CMakeFiles/rebuild_cache.dir

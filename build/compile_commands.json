@@ -1,0 +1,32 @@
+[
+{
+  "directory": "/home/vermia/pengo/build",
+  "command": "/usr/bin/g++-5    -I/home/vermia/pengo/clases   -std=c++1y -Wall -Wextra -g   -o CMakeFiles/Pengo.dir/main.cpp.o -c /home/vermia/pengo/main.cpp",
+  "file": "/home/vermia/pengo/main.cpp"
+},
+{
+  "directory": "/home/vermia/pengo/build",
+  "command": "/usr/bin/g++-5    -I/home/vermia/pengo/clases   -std=c++1y -Wall -Wextra -g   -o CMakeFiles/libClases.dir/clases/Entity.cc.o -c /home/vermia/pengo/clases/Entity.cc",
+  "file": "/home/vermia/pengo/clases/Entity.cc"
+},
+{
+  "directory": "/home/vermia/pengo/build",
+  "command": "/usr/bin/g++-5    -I/home/vermia/pengo/clases   -std=c++1y -Wall -Wextra -g   -o CMakeFiles/libClases.dir/clases/Pengo.cc.o -c /home/vermia/pengo/clases/Pengo.cc",
+  "file": "/home/vermia/pengo/clases/Pengo.cc"
+},
+{
+  "directory": "/home/vermia/pengo/build",
+  "command": "/usr/bin/g++-5    -I/home/vermia/pengo/clases   -std=c++1y -Wall -Wextra -g   -o CMakeFiles/libClases.dir/clases/Hielo.cc.o -c /home/vermia/pengo/clases/Hielo.cc",
+  "file": "/home/vermia/pengo/clases/Hielo.cc"
+},
+{
+  "directory": "/home/vermia/pengo/build",
+  "command": "/usr/bin/g++-5    -I/home/vermia/pengo/clases   -std=c++1y -Wall -Wextra -g   -o CMakeFiles/libClases.dir/clases/GameManager.cc.o -c /home/vermia/pengo/clases/GameManager.cc",
+  "file": "/home/vermia/pengo/clases/GameManager.cc"
+},
+{
+  "directory": "/home/vermia/pengo/build",
+  "command": "/usr/bin/g++-5    -I/home/vermia/pengo/clases   -std=c++1y -Wall -Wextra -g   -o CMakeFiles/libClases.dir/clases/Snobee.cc.o -c /home/vermia/pengo/clases/Snobee.cc",
+  "file": "/home/vermia/pengo/clases/Snobee.cc"
+}
+]
