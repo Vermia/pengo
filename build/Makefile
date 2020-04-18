@@ -136,6 +136,33 @@ libClases/fast:
 	$(MAKE) -f CMakeFiles/libClases.dir/build.make CMakeFiles/libClases.dir/build
 .PHONY : libClases/fast
 
+clases/Animacion.o: clases/Animacion.cc.o
+
+.PHONY : clases/Animacion.o
+
+# target to build an object file
+clases/Animacion.cc.o:
+	$(MAKE) -f CMakeFiles/libClases.dir/build.make CMakeFiles/libClases.dir/clases/Animacion.cc.o
+.PHONY : clases/Animacion.cc.o
+
+clases/Animacion.i: clases/Animacion.cc.i
+
+.PHONY : clases/Animacion.i
+
+# target to preprocess a source file
+clases/Animacion.cc.i:
+	$(MAKE) -f CMakeFiles/libClases.dir/build.make CMakeFiles/libClases.dir/clases/Animacion.cc.i
+.PHONY : clases/Animacion.cc.i
+
+clases/Animacion.s: clases/Animacion.cc.s
+
+.PHONY : clases/Animacion.s
+
+# target to generate assembly for a file
+clases/Animacion.cc.s:
+	$(MAKE) -f CMakeFiles/libClases.dir/build.make CMakeFiles/libClases.dir/clases/Animacion.cc.s
+.PHONY : clases/Animacion.cc.s
+
 clases/Entity.o: clases/Entity.cc.o
 
 .PHONY : clases/Entity.o
@@ -271,6 +298,33 @@ clases/Snobee.cc.s:
 	$(MAKE) -f CMakeFiles/libClases.dir/build.make CMakeFiles/libClases.dir/clases/Snobee.cc.s
 .PHONY : clases/Snobee.cc.s
 
+clases/Timer.o: clases/Timer.cc.o
+
+.PHONY : clases/Timer.o
+
+# target to build an object file
+clases/Timer.cc.o:
+	$(MAKE) -f CMakeFiles/libClases.dir/build.make CMakeFiles/libClases.dir/clases/Timer.cc.o
+.PHONY : clases/Timer.cc.o
+
+clases/Timer.i: clases/Timer.cc.i
+
+.PHONY : clases/Timer.i
+
+# target to preprocess a source file
+clases/Timer.cc.i:
+	$(MAKE) -f CMakeFiles/libClases.dir/build.make CMakeFiles/libClases.dir/clases/Timer.cc.i
+.PHONY : clases/Timer.cc.i
+
+clases/Timer.s: clases/Timer.cc.s
+
+.PHONY : clases/Timer.s
+
+# target to generate assembly for a file
+clases/Timer.cc.s:
+	$(MAKE) -f CMakeFiles/libClases.dir/build.make CMakeFiles/libClases.dir/clases/Timer.cc.s
+.PHONY : clases/Timer.cc.s
+
 main.o: main.cpp.o
 
 .PHONY : main.o
@@ -308,6 +362,9 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... Pengo"
 	@echo "... libClases"
+	@echo "... clases/Animacion.o"
+	@echo "... clases/Animacion.i"
+	@echo "... clases/Animacion.s"
 	@echo "... clases/Entity.o"
 	@echo "... clases/Entity.i"
 	@echo "... clases/Entity.s"
@@ -323,6 +380,9 @@ help:
 	@echo "... clases/Snobee.o"
 	@echo "... clases/Snobee.i"
 	@echo "... clases/Snobee.s"
+	@echo "... clases/Timer.o"
+	@echo "... clases/Timer.i"
+	@echo "... clases/Timer.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

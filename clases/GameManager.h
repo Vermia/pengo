@@ -7,6 +7,7 @@
 #include "Hielo.h"
 #include "Pengo.h"
 #include "Snobee.h"
+#include "Timer.h"
 
 #define maxHielo 200
 #define maxEnemies 4
@@ -34,6 +35,15 @@ private:
     int vidas;
     int currentLevel;
 
+    Timer bordesRosasTimer;
+
+    sf::RectangleShape bordeDerecha;
+    sf::RectangleShape bordeArriba;
+    sf::RectangleShape bordeIzquierda;
+    sf::RectangleShape bordeAbajo;
+
+    sf::View vista;
+
 protected:
 
     //CANON
@@ -52,17 +62,23 @@ protected:
     Hielo* crearHielo(int, int);
     Snobee* crearSnobee(int, int);
     Pengo* crearPengo(int, int);
+
     Hielo* coliPengoHielo(int direction);
     bool coliHieloHielo(Hielo*, int direction);
-    bool coliPengoSnobee();
+    int coliPengoSnobee(); //0: Sin colision, 1: Pengo pierde, 2: Pengo gana
     int  coliHieloSnobee(Hielo&, Snobee&);
+    bool coliPengoBorde(int direction);
+    bool coliBorde(Entity*, int direction);
+
     void draw(RenderWindow&);
     bool push();
+    bool stun(int direction);
     void gameOver();
     void victoria();
     void finish();
     void colisiones();
     void quitarHieloLinea(int, int, int, bool);
+    void respawnPengo();
 
     int buscarHielo(int, int);
     Snobee* buscarSnobee(int, int);
@@ -79,10 +95,12 @@ protected:
     float getUnitH(){return unitH;};
     int getVidas(){return vidas;}
     sf::String getTitle(){return title;};
+    sf::View* getVista(){return &vista;};
 
     //SET
     bool setGrid( int p_gridW, int p_gridH );
     void perderVida(){vidas--; std::cout<<vidas<<std::endl;}
+    void setVidas(int p_vidas){vidas=p_vidas;}
 };
 
 

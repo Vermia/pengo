@@ -1,7 +1,9 @@
 #ifndef ENTITY_H
 #define ENTITY_H
 
+#pragma once
 #include <SFML/Graphics.hpp>
+#include "Animacion.h"
 using namespace sf;
 
 class Entity : public sf::Drawable
@@ -15,8 +17,10 @@ protected:
     float movespeedY;
     sf::Sprite* sprite;
     sf::Texture texture;
+    bool killme;
+    bool movementImpaired;
     
-
+    Animacion* animacion;
     
 public:
     //CANON
@@ -33,6 +37,8 @@ public:
     void updateHitbox();
     void normalizePosition();
 
+    void updateAnimacion();
+
     //GET
     sf::Sprite* getSprite(){return sprite;};
     float getX(){return sprite->getPosition().x; };
@@ -41,6 +47,8 @@ public:
     int getMoveTimer(){return moveTimer; };
     float getMovespeedX(){return movespeedX; };
     float getMovespeedY(){return movespeedY; };
+    Animacion* getAnimacion(){return animacion;}
+    bool getKillme(){return killme;}
 
     sf::FloatRect  hitboxLeft;
     sf::FloatRect  hitboxRight;
@@ -56,6 +64,7 @@ public:
     void changeSpeed(float p_speed);
     bool setSprite(unsigned int column, unsigned int row);
     bool setTexture(sf::String file);
+    void impairMovement(){movementImpaired=true;}
 };
 
 #endif

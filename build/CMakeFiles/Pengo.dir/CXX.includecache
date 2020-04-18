@@ -6,9 +6,13 @@
 
 #IncludeRegexTransform: 
 
+/home/vermia/pengo/clases/Animacion.h
+
 /home/vermia/pengo/clases/Entity.h
 SFML/Graphics.hpp
 -
+Animacion.h
+/home/vermia/pengo/clases/Animacion.h
 
 /home/vermia/pengo/clases/GameManager.h
 SFML/Graphics.hpp
@@ -21,12 +25,16 @@ Pengo.h
 /home/vermia/pengo/clases/Pengo.h
 Snobee.h
 /home/vermia/pengo/clases/Snobee.h
+Timer.h
+/home/vermia/pengo/clases/Timer.h
 
 /home/vermia/pengo/clases/Hielo.h
 SFML/Graphics.hpp
 -
 Entity.h
 /home/vermia/pengo/clases/Entity.h
+Snobee.h
+/home/vermia/pengo/clases/Snobee.h
 
 /home/vermia/pengo/clases/Pengo.h
 SFML/Graphics.hpp
@@ -39,6 +47,12 @@ SFML/Graphics.hpp
 -
 Entity.h
 /home/vermia/pengo/clases/Entity.h
+Hielo.h
+/home/vermia/pengo/clases/Hielo.h
+Timer.h
+/home/vermia/pengo/clases/Timer.h
+
+/home/vermia/pengo/clases/Timer.h
 
 /home/vermia/pengo/main.cpp
 SFML/Graphics.hpp

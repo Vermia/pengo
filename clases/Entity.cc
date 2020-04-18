@@ -6,23 +6,30 @@
 //CANON
 Entity::Entity()      
 {
+    killme=false;
     moving=0;
     movespeedX=0;
     movespeedY=0;
     moveTimer=0;
+    movementImpaired=false;
     setPosition(-500,-500); // lejos de la accion
 
     hitboxTLV.setFillColor(Color(255,0,0,128));
     hitboxTRV.setFillColor(Color(0,0,255,128));
     hitboxBLV.setFillColor(Color(0,255,0,128));
     hitboxBRV.setFillColor(Color(255,255,0,128));
+
+    animacion=new Animacion();
 }
 
 Entity::Entity(float p_x, float p_y)
 {
+    killme=false;
     sprite = new Sprite();
 
     moving=0;
+    movementImpaired=false;
+
     movespeedX=0;
     movespeedY=0;
     moveTimer=0;
@@ -32,6 +39,8 @@ Entity::Entity(float p_x, float p_y)
     hitboxTRV.setFillColor(Color(0,0,255,128));
     hitboxBLV.setFillColor(Color(0,255,0,128));
     hitboxBRV.setFillColor(Color(255,255,0,128));
+
+    animacion=new Animacion();
 }
 
 Entity::~Entity(){
@@ -78,6 +87,7 @@ bool Entity::move(int direction){
 bool Entity::stop(){
     if(moving!=0){
         moving=0;
+        movementImpaired=false; //OJO
         normalizePosition();
         return true;
     }else return false;
@@ -87,7 +97,7 @@ void Entity::update(){
 
     GameManager* game = GameManager::instancia();
     float dt=game->deltaTime;
-
+if(!movementImpaired){
 switch(moving){
     case 0:
         
@@ -110,8 +120,11 @@ switch(moving){
 
     default: break;
   }
+}
+
 
   updateHitbox();
+  updateAnimacion();
 }
 
 
@@ -191,6 +204,43 @@ void Entity::updateHitbox(){
     hitboxBRV.setSize(Vector2f(hitboxUp.width, hitboxUp.height));
 }
 
+void Entity::updateAnimacion(){
+    GameManager* game = GameManager::instancia();
+    animacion->update();
+    int it  = animacion->getIteracion();
+    int col = animacion->getCurrentColumn();
+    int row = animacion->getCurrentRow();
+
+    //std::cout<< it << " ----- " << col << " ---- " << row << std::endl;
+
+    if(col != -1 && row != -1){
+        setSprite(col, row);
+    } else {
+        switch (animacion->getBehavior())
+        {
+        case 1:
+            animacion->setIteracion(0);
+        break;
+
+        case 2:
+            killme=true;
+        break;
+
+        case 3:
+            game->pengo->setPushing(false);
+            game->pengo->asEntity()->getAnimacion()->reset();
+            game->pengo->asEntity()->getAnimacion()->setBehavior(1);
+        break;
+
+        case 4: 
+            game->pengo->morir();
+        break;
+        
+        default:
+            break;
+        }
+    }
+}
 
 void Entity::normalizePosition(){
     float x0=sprite->getPosition().x;

@@ -4,9 +4,11 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "Entity.h"
+#include "Snobee.h"
 using namespace sf;
 
 #define maxHuevos 3
+class Snobee;
 
 class Hielo
 {
@@ -19,6 +21,9 @@ private:
     FloatRect hitbox;
     RectangleShape hitboxV;
     bool huevo;
+    bool dying;
+
+    Snobee* host;
 public:
     //CANON
     Hielo();
@@ -36,15 +41,23 @@ public:
     void eclosiona();
 
     //GET
-    Entity asEntity();
+    Entity* asEntity();
     bool getKillme(){return killme;}
     FloatRect getHitbox(){return hitbox;}
     RectangleShape getHitboxV(){return hitboxV;}
     static int totalHuevos;
+    bool getHuevo(){return huevo;}
+    bool isDying(){return dying;}
+    Snobee* getHost(){return host;}
+
+    static int animSerDestruido[maxAnimationFrames][2];
+    static void initAnimaciones();
 
 
     //SET
     void tieneHuevo();
+    void iniciarMuerte();
+    void setHost(Snobee* p_host){host=p_host;}
 };
 
 

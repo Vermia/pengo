@@ -1,6 +1,7 @@
 #include "GameManager.h"
 #include <SFML/Graphics.hpp>
 
+
    GameManager* GameManager::p_instancia = 0;
 
    GameManager* GameManager::instancia(){
@@ -23,6 +24,29 @@ GameManager::GameManager() {
     vidas=3;
     godmode=false;
 
+    bordesRosasTimer.setMax(1.0f);
+
+    vista.setCenter(sf::Vector2f(windowW/2, windowH/2 - unitH*2));
+    vista.setSize(sf::Vector2f(windowW + windowW/2, windowH + windowH/2));
+
+    float bordeSize = 25.0f;
+
+    bordeDerecha.setSize(Vector2f(bordeSize, windowH + 2*bordeSize));
+    bordeDerecha.setPosition(windowW-1 , -bordeSize);
+    bordeDerecha.setFillColor(Color(255,0,128));
+    
+    bordeArriba.setSize(Vector2f(windowW, bordeSize));
+    bordeArriba.setPosition(0,-bordeSize);
+    bordeArriba.setFillColor(Color(255,0,128));
+
+    bordeIzquierda.setSize(Vector2f(bordeSize, windowH + 2*bordeSize));
+    bordeIzquierda.setPosition(-bordeSize,-bordeSize);
+    bordeIzquierda.setFillColor(Color(255,0,128));
+
+    bordeAbajo.setSize(Vector2f(windowW, bordeSize));
+    bordeAbajo.setPosition(0,windowH);
+    bordeAbajo.setFillColor(Color(255,0,128));
+
     for(int i=0 ; i<maxHielo ; i++){
         hielo[i]=NULL;
     }
@@ -31,6 +55,7 @@ GameManager::GameManager() {
         bees[i]=NULL;
     }
 
+    Hielo::initAnimaciones();
 
     if( ! Pengo::giveTexture("resources/sheet_Pengo.png")) std::cout << "Error cargando textura de Pengo" << std::endl;
     if( ! Hielo::giveTexture("resources/sheet_Hielo.png")) std::cout << "Error cargando textura de Hielo" << std::endl;
@@ -169,6 +194,8 @@ bool GameManager::start(int seed){
     }
     //////////// MAPA DE HIELOS CREADO //////////
 
+    
+
     return true;
 
 }
@@ -193,7 +220,9 @@ void GameManager::update(int ciclo){
     int afortunada=ciclo%4;
 
     //It's over, Anakin. I have the high ground.
-    if(!vidas) gameOver();
+    if(!vidas){
+        gameOver();
+    }
     bool todosmuertos=true;
     for(int i=0 ; i<maxEnemies ; i++){
         if(bees[i]!=NULL){
@@ -201,10 +230,14 @@ void GameManager::update(int ciclo){
         }
     }
     if(todosmuertos) victoria();
-
-    if(ciclo%10==0){
-        for(int i=0;i<maxHielo;i++){ if(hielo[i]==NULL) continue;
-            hielo[i]->eclosiona();
+    
+    if(bees[afortunada]==NULL){
+        for(int i=1;i<maxHielo;i++){ if(hielo[i]==NULL) continue;
+            if(hielo[i]->getHuevo() && hielo[i]->getHost()==NULL){
+                bees[afortunada]=new Snobee(hielo[i]->asEntity()->getX(), hielo[i]->asEntity()->getY());
+                bees[afortunada]->birth(hielo[i]);
+                break;
+            }
         }
     }
 
@@ -222,11 +255,25 @@ void GameManager::update(int ciclo){
                 }
             }
         }
-        coliHieloSnobee(*hielo[i], *bees[afortunada]);
+        if(bees[afortunada]!= NULL && !bees[afortunada]->isBirthing()){
+            coliHieloSnobee(*hielo[i], *bees[afortunada]);
+        }
+    }
+
+    int coliP_SB = coliPengoSnobee();
+    if(coliP_SB != -1){
+        if(bees[coliP_SB]->isStunned()){
+            bees[coliP_SB]->destroy();
+        } else{
+            if(!godmode){
+                pengo->iniciarMuerte();
+            }
+        }
     }
 
     //Updates de las cosas
-    pengo->update();
+    if(pengo!=NULL)
+        pengo->update();
 
     for(int i=0 ; i<maxHielo ; i++){ if(hielo[i]==NULL) continue;
         hielo[i]->update();
@@ -234,6 +281,13 @@ void GameManager::update(int ciclo){
             delete hielo[i];
             hielo[i]=NULL;
         }
+    }
+
+    if(bordesRosasTimer.advance() <= 0){
+        bordeDerecha.setFillColor(Color(255,0,128));
+        bordeArriba.setFillColor(Color(255,0,128));
+        bordeIzquierda.setFillColor(Color(255,0,128));
+        bordeAbajo.setFillColor(Color(255,0,128));
     }
 
     for(int i=0 ; i<maxEnemies ; i++){ if(bees[i]==NULL) continue;
@@ -250,7 +304,7 @@ void GameManager::update(int ciclo){
 bool GameManager::canMove(int direction){
     bool puede = true;
 
-    if(coliPengoHielo(direction)!=NULL){
+    if(coliPengoHielo(direction)!=NULL || coliBorde(pengo->asEntity(), direction)){
         puede=false;
     }
     
@@ -273,6 +327,11 @@ void GameManager::draw(RenderWindow& window){
             bees[i]->draw(window);
         }
     }
+
+    window.draw(bordeDerecha);
+    window.draw(bordeArriba);
+    window.draw(bordeIzquierda);
+    window.draw(bordeAbajo);
 }
 
 bool GameManager::push(){
@@ -281,11 +340,33 @@ bool GameManager::push(){
     Hielo* colisionante = coliPengoHielo(facing);
 
     if(colisionante==NULL){
-        return false;
+        return stun(facing);
     }
 
-    if(coliHieloHielo(colisionante, facing)){
-        colisionante->destroy();
+    pengo->setPushing(true);
+    pengo->asEntity()->getAnimacion()->setBehavior(3);
+
+    if(!pengo->isDying()){
+        switch(facing){
+            case 1: case 3:
+                pengo->asEntity()->getAnimacion()->setSecuencia(pengo->animEmpujarDerecha);
+            break;
+
+            case 2:
+                pengo->asEntity()->getAnimacion()->setSecuencia(pengo->animEmpujarArriba);
+            break;
+
+            case 4:
+                pengo->asEntity()->getAnimacion()->setSecuencia(pengo->animEmpujarAbajo);
+            break;
+
+            default:break;
+        }
+    }
+    
+
+    if( (coliHieloHielo(colisionante, facing) || coliBorde(colisionante->asEntity(), facing)) && !colisionante->isDying()){
+        colisionante->iniciarMuerte();
         return true;
     }else{
         colisionante->move(facing);
@@ -299,15 +380,15 @@ bool GameManager::push(){
 Hielo* GameManager::coliPengoHielo(int direction){
     Hielo* colisionante = NULL;
 
-    sf::FloatRect pengoLeft = pengo->asEntity().hitboxLeft;
-    sf::FloatRect pengoRight = pengo->asEntity().hitboxRight;
-    sf::FloatRect pengoDown = pengo->asEntity().hitboxDown;
-    sf::FloatRect pengoUp = pengo->asEntity().hitboxUp;
+    sf::FloatRect pengoLeft = pengo->asEntity()->hitboxLeft;
+    sf::FloatRect pengoRight = pengo->asEntity()->hitboxRight;
+    sf::FloatRect pengoDown = pengo->asEntity()->hitboxDown;
+    sf::FloatRect pengoUp = pengo->asEntity()->hitboxUp;
 
     switch(direction){
         case 1: //Pengo intenta moverse hacia la derecha
         for(int i=0 ; i<maxHielo ; i++){
-            if(hielo[i]!=NULL && pengoRight.intersects(hielo[i]->asEntity().hitboxLeft)){
+            if(hielo[i]!=NULL && pengoRight.intersects(hielo[i]->asEntity()->hitboxLeft)){
                 colisionante = hielo[i];
                 break;
             }
@@ -317,7 +398,7 @@ Hielo* GameManager::coliPengoHielo(int direction){
             
         case 2://Pengo intenta moverse hacia arriba
             for(int i=0 ; i<maxHielo ; i++){
-                if(hielo[i]!=NULL && pengoUp.intersects(hielo[i]->asEntity().hitboxDown)){
+                if(hielo[i]!=NULL && pengoUp.intersects(hielo[i]->asEntity()->hitboxDown)){
                    colisionante = hielo[i];
                    break;
                 }
@@ -326,7 +407,7 @@ Hielo* GameManager::coliPengoHielo(int direction){
 
         case 3: //Pengo intenta moverse hacia la izquierda
             for(int i=0 ; i<maxHielo ; i++){
-                if(hielo[i]!=NULL && pengoLeft.intersects(hielo[i]->asEntity().hitboxRight)){
+                if(hielo[i]!=NULL && pengoLeft.intersects(hielo[i]->asEntity()->hitboxRight)){
                     colisionante = hielo[i];
                     break;
                 }
@@ -335,7 +416,7 @@ Hielo* GameManager::coliPengoHielo(int direction){
 
         case 4: //Pengo intenta moverse hacia abajo
             for(int i=0 ; i<maxHielo ; i++){
-                if(hielo[i]!=NULL && pengoDown.intersects(hielo[i]->asEntity().hitboxUp)){
+                if(hielo[i]!=NULL && pengoDown.intersects(hielo[i]->asEntity()->hitboxUp)){
                     colisionante = hielo[i];
                     break;
                 }
@@ -351,15 +432,15 @@ Hielo* GameManager::coliPengoHielo(int direction){
 bool GameManager::coliHieloHielo(Hielo* hieloBase, int direction){
     bool hayColision = false;
 
-    sf::FloatRect pengoLeft = hieloBase->asEntity().hitboxLeft;
-    sf::FloatRect pengoRight = hieloBase->asEntity().hitboxRight;
-    sf::FloatRect pengoDown = hieloBase->asEntity().hitboxDown;
-    sf::FloatRect pengoUp = hieloBase->asEntity().hitboxUp;
+    sf::FloatRect pengoLeft = hieloBase->asEntity()->hitboxLeft;
+    sf::FloatRect pengoRight = hieloBase->asEntity()->hitboxRight;
+    sf::FloatRect pengoDown = hieloBase->asEntity()->hitboxDown;
+    sf::FloatRect pengoUp = hieloBase->asEntity()->hitboxUp;
 
     switch(direction){
         case 1: //Pengo intenta moverse hacia la derecha
         for(int i=0 ; i<maxHielo ; i++){
-            if(hielo[i]!=NULL && pengoRight.intersects(hielo[i]->asEntity().hitboxLeft)){
+            if(hielo[i]!=NULL && pengoRight.intersects(hielo[i]->asEntity()->hitboxLeft)){
                 hayColision=true;
                 break;
             }
@@ -369,7 +450,7 @@ bool GameManager::coliHieloHielo(Hielo* hieloBase, int direction){
             
         case 2://Pengo intenta moverse hacia arriba
             for(int i=0 ; i<maxHielo ; i++){
-                if(hielo[i]!=NULL && pengoUp.intersects(hielo[i]->asEntity().hitboxDown)){
+                if(hielo[i]!=NULL && pengoUp.intersects(hielo[i]->asEntity()->hitboxDown)){
                    hayColision=true;
                    break;
                 }
@@ -378,7 +459,7 @@ bool GameManager::coliHieloHielo(Hielo* hieloBase, int direction){
 
         case 3: //Pengo intenta moverse hacia la izquierda
             for(int i=0 ; i<maxHielo ; i++){
-                if(hielo[i]!=NULL && pengoLeft.intersects(hielo[i]->asEntity().hitboxRight)){
+                if(hielo[i]!=NULL && pengoLeft.intersects(hielo[i]->asEntity()->hitboxRight)){
                     hayColision=true;
                     break;
                 }
@@ -387,7 +468,7 @@ bool GameManager::coliHieloHielo(Hielo* hieloBase, int direction){
 
         case 4: //Pengo intenta moverse hacia abajo
             for(int i=0 ; i<maxHielo ; i++){
-                if(hielo[i]!=NULL && pengoDown.intersects(hielo[i]->asEntity().hitboxUp)){
+                if(hielo[i]!=NULL && pengoDown.intersects(hielo[i]->asEntity()->hitboxUp)){
                     hayColision=true;
                     break;
                 }
@@ -400,33 +481,52 @@ bool GameManager::coliHieloHielo(Hielo* hieloBase, int direction){
     return hayColision;
 }
 
-bool GameManager::coliPengoSnobee(){
+int GameManager::coliPengoSnobee(){
     for(int i=0 ; i<maxEnemies; i++){ if(bees[i]==NULL) continue;
-        if(pengo->asEntity().hitboxLeft.intersects(bees[i]->getHitbox())
-        || pengo->asEntity().hitboxDown.intersects(bees[i]->getHitbox())
-        || pengo->asEntity().hitboxRight.intersects(bees[i]->getHitbox())
-        || pengo->asEntity().hitboxUp.intersects(bees[i]->getHitbox())
+        if(pengo->asEntity()->hitboxLeft.intersects(bees[i]->getHitbox())
+        || pengo->asEntity()->hitboxDown.intersects(bees[i]->getHitbox())
+        || pengo->asEntity()->hitboxRight.intersects(bees[i]->getHitbox())
+        || pengo->asEntity()->hitboxUp.intersects(bees[i]->getHitbox())
         ){
-            return true;
+            return i;
         }
     }
 
-    return false;
+    return -1;
 }
 
 int GameManager::coliHieloSnobee(Hielo& hielo0, Snobee& snobee0){
-    int hMoving = hielo0.asEntity().getMovingState();
+    int hMoving = hielo0.asEntity()->getMovingState();
     FloatRect beebox=snobee0.getHitbox();
     FloatRect hielobox=hielo0.getHitbox();
-    if(beebox.intersects(hielobox)){
+    Hielo* asesino = &hielo0;
+    if(beebox.intersects(hielobox) && !snobee0.isDying()){
         if(hMoving){
-            snobee0.destroy();
+            snobee0.iniciarMuerte(asesino);
             return 1;
         } else{
-            hielo0.destroy();
-            return 2;
+            snobee0.asEntity()->changeSpeed(20.0f);
+            if(!hielo0.isDying()){
+                hielo0.iniciarMuerte();
+                switch(snobee0.getFacing()){
+                    case 1:
+                        snobee0.asEntity()->getAnimacion()->setSecuencia(snobee0.animRomperDerecha);
+                    break;
+                    case 2:
+                        snobee0.asEntity()->getAnimacion()->setSecuencia(snobee0.animRomperArriba);
+                    break;
+                    case 3:
+                        snobee0.asEntity()->getAnimacion()->setSecuencia(snobee0.animRomperDerecha);
+                    break;
+                    case 4:
+                        snobee0.asEntity()->getAnimacion()->setSecuencia(snobee0.animRomperAbajo);
+                    break;
+                    default:break;
+                }
+                return 2;
+            }
         }
-    }
+    } 
 
     return 0;
 }
@@ -456,7 +556,7 @@ int GameManager::buscarHielo(int columna, int fila){
     float y = unitH/2 + unitH*fila;
 
     for(int i=0 ; i<maxHielo ; i++){ if(hielo[i]==NULL) continue;
-        if(hielo[i]->asEntity().getX() == x && hielo[i]->asEntity().getY() == y){
+        if(hielo[i]->asEntity()->getX() == x && hielo[i]->asEntity()->getY() == y){
             encontrado=i;
             break;
         }
@@ -472,7 +572,7 @@ Snobee* GameManager::buscarSnobee(int columna, int fila){
     float y = unitH/2 + unitH*fila;
 
     for(int i=0 ; i<maxEnemies ; i++){ if(bees[i]==NULL) continue;
-        if(bees[i]->asEntity().getX() == x && bees[i]->asEntity().getY() == y){
+        if(bees[i]->asEntity()->getX() == x && bees[i]->asEntity()->getY() == y){
             encontrado=bees[i];
             break;
         }
@@ -515,4 +615,127 @@ void GameManager::gameOver(){
 void GameManager::victoria(){
     finish();
     start( rand()%1000+3601 );
+}
+
+void GameManager::respawnPengo(){
+    delete pengo;
+    pengo = crearPengo(7, 6);
+}
+
+bool GameManager::coliPengoBorde(int direction){
+    switch(direction){
+        case 1:
+            if(pengo->asEntity()->hitboxRight.intersects( bordeDerecha.getGlobalBounds() )){
+                return true;
+            }
+        break;
+        case 2:
+            if(pengo->asEntity()->hitboxUp.intersects( bordeArriba.getGlobalBounds() )){
+                return true;
+            }
+        break;
+        case 3:
+            if(pengo->asEntity()->hitboxLeft.intersects( bordeIzquierda.getGlobalBounds() )){
+                return true;
+            }
+        break;
+        case 4:
+            if(pengo->asEntity()->hitboxDown.intersects( bordeAbajo.getGlobalBounds() )){
+                return true;
+            }
+        break;
+        
+
+        default:break;
+    }
+    return false;
+}
+bool GameManager::coliBorde(Entity* entity, int direction){
+    switch(direction){
+        case 1:
+            if(entity->hitboxRight.intersects( bordeDerecha.getGlobalBounds() )){
+                return true;
+            }
+        break;
+        case 2:
+            if(entity->hitboxUp.intersects( bordeArriba.getGlobalBounds() )){
+                return true;
+            }
+        break;
+        case 3:
+            if(entity->hitboxLeft.intersects( bordeIzquierda.getGlobalBounds() )){
+                return true;
+            }
+        break;
+        case 4:
+            if(entity->hitboxDown.intersects( bordeAbajo.getGlobalBounds() )){
+                return true;
+            }
+        break;
+        
+
+        default:break;
+    }
+
+    return false;
+}
+
+
+bool GameManager::stun(int direction){
+    RectangleShape* tocado=NULL;
+    if(coliBorde(pengo->asEntity(),direction)){
+        switch(direction){
+            case 1:
+                tocado=&bordeDerecha;
+                for(int i=0 ; i<maxEnemies ; i++){ if(bees[i]==NULL) continue;
+                    if(coliBorde(bees[i]->asEntity(), 1)){ 
+                        bees[i]->becomeStunned();
+                    }
+                }
+                pengo->asEntity()->getAnimacion()->setSecuencia(pengo->animEmpujarDerecha);
+            break;
+            case 2:
+                tocado=&bordeArriba;
+                for(int i=0 ; i<maxEnemies ; i++){ if(bees[i]==NULL) continue;
+                    if(coliBorde(bees[i]->asEntity(), 2)){ 
+                        bees[i]->becomeStunned();
+                    }
+                }
+                pengo->asEntity()->getAnimacion()->setSecuencia(pengo->animEmpujarArriba);
+            break;
+            case 3:
+                tocado=&bordeIzquierda;
+                for(int i=0 ; i<maxEnemies ; i++){ if(bees[i]==NULL) continue;
+                    if(coliBorde(bees[i]->asEntity(), 3)){ 
+                        bees[i]->becomeStunned();
+                    }
+                }
+                pengo->asEntity()->getAnimacion()->setSecuencia(pengo->animEmpujarDerecha);
+            break;
+            case 4:
+                tocado=&bordeAbajo;
+                for(int i=0 ; i<maxEnemies ; i++){ if(bees[i]==NULL) continue;
+                    if(coliBorde(bees[i]->asEntity(), 4)){ 
+                        bees[i]->becomeStunned();
+                    }
+                }
+                pengo->asEntity()->getAnimacion()->setSecuencia(pengo->animEmpujarAbajo);
+            break;
+
+            default:break;
+        }
+
+        pengo->setPushing(true);
+        pengo->asEntity()->getAnimacion()->setBehavior(3);
+        
+
+        if(tocado!=NULL){
+            tocado->setFillColor(Color(255,255,0));
+            bordesRosasTimer.reset();
+        }
+
+    }
+     
+
+    return false;
 }

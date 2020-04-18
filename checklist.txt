@@ -1,22 +1,22 @@
 APROBADO
 Minimo 2 niveles +
-Añadir todas las animaciones y sprites -
+Añadir todas las animaciones y sprites +
 Funcionalidad:
     Capacidad de empujar y destruir bloques +
     Pengo se desplaza por el entorno con las condiciones del juego original +
     Pengo puede eliminar Snobees adultos mediante bloques +
     Si se eliminan todos se pasa al siguiente nivel +
     Los Snobees aparecen en el entorno para suplir a los muertos +
-    Si te tocan tres veces, mueres +
+    Si te tocan tres veces, pierdes +
 Teclas:
     ESC: salir +
     Flechas: moverse +
     Espacio: Empujar/romper bloques +
-    G: Inmortalidad -
+    G: Inmortalidad +
     X: Perder nivel +
     N: Ganar nivel +
-Generación de mapas en el codigo +
-Al morir se reinicia el juego +
+Generación de mapas en el codigo + (No tiled)
+Al morir se reinicia el nivel +
 Ejecución en ventana de dimensiones menores que 1080x720 +
 
 
@@ -34,3 +34,4 @@ Generación aleatoria de niveles +
 IA de huida de los Snobees -
 Transición entre niveles -
 Bucle tipo 3 +
+Bucle tipo 4 -

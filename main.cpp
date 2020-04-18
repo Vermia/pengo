@@ -29,6 +29,7 @@ int main() {
 
   //Crear terreno de juego
   sf::RenderWindow window(sf::VideoMode(game->getWindowW(), game->getWindowH()), game->getTitle());
+  window.setView(*game->getVista());
   //Hielo hielo(40,0, spriteHielo);
   srand(time(0));
 
@@ -66,6 +67,17 @@ int main() {
           } else showHitboxes=true;
         break;
 
+        case sf::Keyboard::S:
+          for (int i=0 ;i<maxEnemies; i++){ if(game->bees[i]==NULL) continue;
+            game->bees[i]->becomeStunned();
+          }
+        break;
+
+        case sf::Keyboard::Q:
+          for (int i=0 ;i<maxHielo; i++){ if(game->hielo[i]==NULL) continue;
+            game->hielo[i]->iniciarMuerte();
+          }
+        break;
 
         //Movimiento
         /*case sf::Keyboard::Right:
@@ -110,7 +122,8 @@ int main() {
         break;
 
         case sf::Keyboard::X:
-          game->gameOver();
+          game->pengo->iniciarMuerte();
+          game->setVidas(1);
         break;
 
         case sf::Keyboard::G:
@@ -151,10 +164,10 @@ int main() {
 
 
     if(showHitboxes){
-      window.draw(game->pengo->asEntity().hitboxTLV);
-      window.draw(game->pengo->asEntity().hitboxTRV);
-      window.draw(game->pengo->asEntity().hitboxBLV);
-      window.draw(game->pengo->asEntity().hitboxBRV);
+      window.draw(game->pengo->asEntity()->hitboxTLV);
+      window.draw(game->pengo->asEntity()->hitboxTRV);
+      window.draw(game->pengo->asEntity()->hitboxBLV);
+      window.draw(game->pengo->asEntity()->hitboxBRV);
 
       /*for(int i=0;i<180 ; i++){
         if(game->hielo[i]!=NULL){

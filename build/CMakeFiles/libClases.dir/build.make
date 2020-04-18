@@ -57,9 +57,33 @@ include CMakeFiles/libClases.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/libClases.dir/flags.make
 
+CMakeFiles/libClases.dir/clases/Animacion.cc.o: CMakeFiles/libClases.dir/flags.make
+CMakeFiles/libClases.dir/clases/Animacion.cc.o: ../clases/Animacion.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/vermia/pengo/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/libClases.dir/clases/Animacion.cc.o"
+	/usr/bin/g++-5   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/libClases.dir/clases/Animacion.cc.o -c /home/vermia/pengo/clases/Animacion.cc
+
+CMakeFiles/libClases.dir/clases/Animacion.cc.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/libClases.dir/clases/Animacion.cc.i"
+	/usr/bin/g++-5  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/vermia/pengo/clases/Animacion.cc > CMakeFiles/libClases.dir/clases/Animacion.cc.i
+
+CMakeFiles/libClases.dir/clases/Animacion.cc.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/libClases.dir/clases/Animacion.cc.s"
+	/usr/bin/g++-5  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/vermia/pengo/clases/Animacion.cc -o CMakeFiles/libClases.dir/clases/Animacion.cc.s
+
+CMakeFiles/libClases.dir/clases/Animacion.cc.o.requires:
+
+.PHONY : CMakeFiles/libClases.dir/clases/Animacion.cc.o.requires
+
+CMakeFiles/libClases.dir/clases/Animacion.cc.o.provides: CMakeFiles/libClases.dir/clases/Animacion.cc.o.requires
+	$(MAKE) -f CMakeFiles/libClases.dir/build.make CMakeFiles/libClases.dir/clases/Animacion.cc.o.provides.build
+.PHONY : CMakeFiles/libClases.dir/clases/Animacion.cc.o.provides
+
+CMakeFiles/libClases.dir/clases/Animacion.cc.o.provides.build: CMakeFiles/libClases.dir/clases/Animacion.cc.o
+
+
 CMakeFiles/libClases.dir/clases/Entity.cc.o: CMakeFiles/libClases.dir/flags.make
 CMakeFiles/libClases.dir/clases/Entity.cc.o: ../clases/Entity.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/vermia/pengo/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/libClases.dir/clases/Entity.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/vermia/pengo/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/libClases.dir/clases/Entity.cc.o"
 	/usr/bin/g++-5   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/libClases.dir/clases/Entity.cc.o -c /home/vermia/pengo/clases/Entity.cc
 
 CMakeFiles/libClases.dir/clases/Entity.cc.i: cmake_force
@@ -83,7 +107,7 @@ CMakeFiles/libClases.dir/clases/Entity.cc.o.provides.build: CMakeFiles/libClases
 
 CMakeFiles/libClases.dir/clases/Pengo.cc.o: CMakeFiles/libClases.dir/flags.make
 CMakeFiles/libClases.dir/clases/Pengo.cc.o: ../clases/Pengo.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/vermia/pengo/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/libClases.dir/clases/Pengo.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/vermia/pengo/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/libClases.dir/clases/Pengo.cc.o"
 	/usr/bin/g++-5   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/libClases.dir/clases/Pengo.cc.o -c /home/vermia/pengo/clases/Pengo.cc
 
 CMakeFiles/libClases.dir/clases/Pengo.cc.i: cmake_force
@@ -107,7 +131,7 @@ CMakeFiles/libClases.dir/clases/Pengo.cc.o.provides.build: CMakeFiles/libClases.
 
 CMakeFiles/libClases.dir/clases/Hielo.cc.o: CMakeFiles/libClases.dir/flags.make
 CMakeFiles/libClases.dir/clases/Hielo.cc.o: ../clases/Hielo.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/vermia/pengo/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/libClases.dir/clases/Hielo.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/vermia/pengo/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/libClases.dir/clases/Hielo.cc.o"
 	/usr/bin/g++-5   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/libClases.dir/clases/Hielo.cc.o -c /home/vermia/pengo/clases/Hielo.cc
 
 CMakeFiles/libClases.dir/clases/Hielo.cc.i: cmake_force
@@ -131,7 +155,7 @@ CMakeFiles/libClases.dir/clases/Hielo.cc.o.provides.build: CMakeFiles/libClases.
 
 CMakeFiles/libClases.dir/clases/GameManager.cc.o: CMakeFiles/libClases.dir/flags.make
 CMakeFiles/libClases.dir/clases/GameManager.cc.o: ../clases/GameManager.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/vermia/pengo/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/libClases.dir/clases/GameManager.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/vermia/pengo/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/libClases.dir/clases/GameManager.cc.o"
 	/usr/bin/g++-5   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/libClases.dir/clases/GameManager.cc.o -c /home/vermia/pengo/clases/GameManager.cc
 
 CMakeFiles/libClases.dir/clases/GameManager.cc.i: cmake_force
@@ -155,7 +179,7 @@ CMakeFiles/libClases.dir/clases/GameManager.cc.o.provides.build: CMakeFiles/libC
 
 CMakeFiles/libClases.dir/clases/Snobee.cc.o: CMakeFiles/libClases.dir/flags.make
 CMakeFiles/libClases.dir/clases/Snobee.cc.o: ../clases/Snobee.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/vermia/pengo/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/libClases.dir/clases/Snobee.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/vermia/pengo/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/libClases.dir/clases/Snobee.cc.o"
 	/usr/bin/g++-5   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/libClases.dir/clases/Snobee.cc.o -c /home/vermia/pengo/clases/Snobee.cc
 
 CMakeFiles/libClases.dir/clases/Snobee.cc.i: cmake_force
@@ -177,25 +201,53 @@ CMakeFiles/libClases.dir/clases/Snobee.cc.o.provides: CMakeFiles/libClases.dir/c
 CMakeFiles/libClases.dir/clases/Snobee.cc.o.provides.build: CMakeFiles/libClases.dir/clases/Snobee.cc.o
 
 
+CMakeFiles/libClases.dir/clases/Timer.cc.o: CMakeFiles/libClases.dir/flags.make
+CMakeFiles/libClases.dir/clases/Timer.cc.o: ../clases/Timer.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/vermia/pengo/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/libClases.dir/clases/Timer.cc.o"
+	/usr/bin/g++-5   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/libClases.dir/clases/Timer.cc.o -c /home/vermia/pengo/clases/Timer.cc
+
+CMakeFiles/libClases.dir/clases/Timer.cc.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/libClases.dir/clases/Timer.cc.i"
+	/usr/bin/g++-5  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/vermia/pengo/clases/Timer.cc > CMakeFiles/libClases.dir/clases/Timer.cc.i
+
+CMakeFiles/libClases.dir/clases/Timer.cc.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/libClases.dir/clases/Timer.cc.s"
+	/usr/bin/g++-5  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/vermia/pengo/clases/Timer.cc -o CMakeFiles/libClases.dir/clases/Timer.cc.s
+
+CMakeFiles/libClases.dir/clases/Timer.cc.o.requires:
+
+.PHONY : CMakeFiles/libClases.dir/clases/Timer.cc.o.requires
+
+CMakeFiles/libClases.dir/clases/Timer.cc.o.provides: CMakeFiles/libClases.dir/clases/Timer.cc.o.requires
+	$(MAKE) -f CMakeFiles/libClases.dir/build.make CMakeFiles/libClases.dir/clases/Timer.cc.o.provides.build
+.PHONY : CMakeFiles/libClases.dir/clases/Timer.cc.o.provides
+
+CMakeFiles/libClases.dir/clases/Timer.cc.o.provides.build: CMakeFiles/libClases.dir/clases/Timer.cc.o
+
+
 # Object files for target libClases
 libClases_OBJECTS = \
+"CMakeFiles/libClases.dir/clases/Animacion.cc.o" \
 "CMakeFiles/libClases.dir/clases/Entity.cc.o" \
 "CMakeFiles/libClases.dir/clases/Pengo.cc.o" \
 "CMakeFiles/libClases.dir/clases/Hielo.cc.o" \
 "CMakeFiles/libClases.dir/clases/GameManager.cc.o" \
-"CMakeFiles/libClases.dir/clases/Snobee.cc.o"
+"CMakeFiles/libClases.dir/clases/Snobee.cc.o" \
+"CMakeFiles/libClases.dir/clases/Timer.cc.o"
 
 # External object files for target libClases
 libClases_EXTERNAL_OBJECTS =
 
+liblibClases.a: CMakeFiles/libClases.dir/clases/Animacion.cc.o
 liblibClases.a: CMakeFiles/libClases.dir/clases/Entity.cc.o
 liblibClases.a: CMakeFiles/libClases.dir/clases/Pengo.cc.o
 liblibClases.a: CMakeFiles/libClases.dir/clases/Hielo.cc.o
 liblibClases.a: CMakeFiles/libClases.dir/clases/GameManager.cc.o
 liblibClases.a: CMakeFiles/libClases.dir/clases/Snobee.cc.o
+liblibClases.a: CMakeFiles/libClases.dir/clases/Timer.cc.o
 liblibClases.a: CMakeFiles/libClases.dir/build.make
 liblibClases.a: CMakeFiles/libClases.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/vermia/pengo/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX static library liblibClases.a"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/vermia/pengo/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Linking CXX static library liblibClases.a"
 	$(CMAKE_COMMAND) -P CMakeFiles/libClases.dir/cmake_clean_target.cmake
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/libClases.dir/link.txt --verbose=$(VERBOSE)
 
@@ -204,11 +256,13 @@ CMakeFiles/libClases.dir/build: liblibClases.a
 
 .PHONY : CMakeFiles/libClases.dir/build
 
+CMakeFiles/libClases.dir/requires: CMakeFiles/libClases.dir/clases/Animacion.cc.o.requires
 CMakeFiles/libClases.dir/requires: CMakeFiles/libClases.dir/clases/Entity.cc.o.requires
 CMakeFiles/libClases.dir/requires: CMakeFiles/libClases.dir/clases/Pengo.cc.o.requires
 CMakeFiles/libClases.dir/requires: CMakeFiles/libClases.dir/clases/Hielo.cc.o.requires
 CMakeFiles/libClases.dir/requires: CMakeFiles/libClases.dir/clases/GameManager.cc.o.requires
 CMakeFiles/libClases.dir/requires: CMakeFiles/libClases.dir/clases/Snobee.cc.o.requires
+CMakeFiles/libClases.dir/requires: CMakeFiles/libClases.dir/clases/Timer.cc.o.requires
 
 .PHONY : CMakeFiles/libClases.dir/requires
 
