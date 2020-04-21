@@ -5,7 +5,7 @@
 Animacion::Animacion(){
     iteracion=0;
     behavior=1;
-    maxTimer=0.25;
+    maxTimer=0.175;
 
     for(int i=0; i<maxAnimationFrames ; i++){
         for(int j=0 ; j<2 ; j++){

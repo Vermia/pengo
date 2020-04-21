@@ -45,7 +45,10 @@ Entity::Entity(float p_x, float p_y)
 
 Entity::~Entity(){
     if(sprite!=NULL){
-       // delete sprite;
+       delete sprite;
+    }
+    if(animacion!=NULL){
+        delete animacion;
     }
     
 }
@@ -190,24 +193,12 @@ void Entity::updateHitbox(){
     hitboxUp.top = ypos-uw;
     hitboxUp.width = uw*2-cota;
     hitboxUp.height = 5;
-
-    hitboxTLV.setPosition(hitboxLeft.left, hitboxLeft.top);
-    hitboxTLV.setSize(Vector2f(hitboxLeft.width, hitboxLeft.height));
-
-    hitboxTRV.setPosition(hitboxRight.left, hitboxRight.top);
-    hitboxTRV.setSize(Vector2f(hitboxRight.width, hitboxRight.height));
-
-    hitboxBLV.setPosition(hitboxDown.left, hitboxDown.top);
-    hitboxBLV.setSize(Vector2f(hitboxDown.width, hitboxDown.height));
-
-    hitboxBRV.setPosition(hitboxUp.left, hitboxUp.top);
-    hitboxBRV.setSize(Vector2f(hitboxUp.width, hitboxUp.height));
 }
 
 void Entity::updateAnimacion(){
     GameManager* game = GameManager::instancia();
     animacion->update();
-    int it  = animacion->getIteracion();
+    //int it  = animacion->getIteracion();
     int col = animacion->getCurrentColumn();
     int row = animacion->getCurrentRow();
 
@@ -234,6 +225,15 @@ void Entity::updateAnimacion(){
 
         case 4: 
             game->pengo->morir();
+        break;
+
+        case 5:
+            for(int i=0 ; i< maxEnemies ; i++){
+                if(game->bees[i]->asEntity() == this){
+                    game->bees[i]->eclosiona();
+                    break;
+                }
+            }
         break;
         
         default:

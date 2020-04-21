@@ -4,6 +4,7 @@
 #define hieloSpeed 300.0f
 
 int Hielo::totalHuevos=0;
+int Hielo::totalDiamantes=0;
 sf::Texture* Hielo::textura = new sf::Texture();
 
 int Hielo::animSerDestruido[maxAnimationFrames][2];
@@ -29,25 +30,35 @@ Hielo::Hielo(){
     hitboxV.setFillColor(Color(0,0,255,128));
     huevo=false;
     dying=false;
-    host==NULL;
 }
 
 Hielo::Hielo(int p_x, int p_y) : entity(p_x, p_y){
   entity.getSprite()->setTexture(*textura, true);
   entity.setSprite(0,0);
 
-    host==NULL;
+    host=NULL;
   maxMoveTimer=1500;
   killme=false;
   entity.changeSpeed(hieloSpeed);
   hitboxV.setFillColor(Color(0,0,255,128));
   huevo=false;
-
+  diamante=false;
   dying=false;
 }
 
 Hielo::~Hielo(){
-  if(huevo) totalHuevos--;
+  if(huevo && host==NULL) totalHuevos--;
+
+  GameManager* game = GameManager::instancia();
+  if(host && host->isBirthing()) {
+    for(int i=0 ; i<maxEnemies ; i++){
+      if(host==game->bees[i]){
+        delete game->bees[i];
+        game->bees[i]=NULL;
+        break;
+      }
+    }
+  }
 }
 
 
@@ -70,6 +81,9 @@ void Hielo::update(){
     entity.setSprite(0,0); 
   } else if (!dying && huevo){
     entity.setSprite(1,0);
+  }
+  if(diamante){
+    entity.setSprite(2,0);
   }
 
 if(!huevo)
@@ -119,7 +133,7 @@ void Hielo::updateHitbox(){
   float cota = 5.0f;
 
   if(entity.getAnimacion()->getBehavior()==2){
-    std::cout<<entity.getSprite()->getTextureRect().left << "...." <<entity.getSprite()->getTextureRect().top<<std::endl;
+    //std::cout<<entity.getSprite()->getTextureRect().left << "...." <<entity.getSprite()->getTextureRect().top<<std::endl;
   } 
 
   hitbox.left = pos.x - uw/2 + cota;
@@ -162,4 +176,12 @@ void Hielo::iniciarMuerte(){
   entity.getAnimacion()->reset();
   entity.getAnimacion()->setSecuencia(Hielo::animSerDestruido);
   entity.getAnimacion()->setBehavior(2);
+}
+
+void Hielo::tieneDiamante(){
+  if(totalDiamantes<maxDiamantes){
+    diamante=true;
+    Hielo::totalDiamantes++;
+    entity.setSprite(2,0);
+  }
 }

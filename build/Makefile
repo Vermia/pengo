@@ -244,6 +244,33 @@ clases/Hielo.cc.s:
 	$(MAKE) -f CMakeFiles/libClases.dir/build.make CMakeFiles/libClases.dir/clases/Hielo.cc.s
 .PHONY : clases/Hielo.cc.s
 
+clases/Huevo.o: clases/Huevo.cc.o
+
+.PHONY : clases/Huevo.o
+
+# target to build an object file
+clases/Huevo.cc.o:
+	$(MAKE) -f CMakeFiles/libClases.dir/build.make CMakeFiles/libClases.dir/clases/Huevo.cc.o
+.PHONY : clases/Huevo.cc.o
+
+clases/Huevo.i: clases/Huevo.cc.i
+
+.PHONY : clases/Huevo.i
+
+# target to preprocess a source file
+clases/Huevo.cc.i:
+	$(MAKE) -f CMakeFiles/libClases.dir/build.make CMakeFiles/libClases.dir/clases/Huevo.cc.i
+.PHONY : clases/Huevo.cc.i
+
+clases/Huevo.s: clases/Huevo.cc.s
+
+.PHONY : clases/Huevo.s
+
+# target to generate assembly for a file
+clases/Huevo.cc.s:
+	$(MAKE) -f CMakeFiles/libClases.dir/build.make CMakeFiles/libClases.dir/clases/Huevo.cc.s
+.PHONY : clases/Huevo.cc.s
+
 clases/Pengo.o: clases/Pengo.cc.o
 
 .PHONY : clases/Pengo.o
@@ -374,6 +401,9 @@ help:
 	@echo "... clases/Hielo.o"
 	@echo "... clases/Hielo.i"
 	@echo "... clases/Hielo.s"
+	@echo "... clases/Huevo.o"
+	@echo "... clases/Huevo.i"
+	@echo "... clases/Huevo.s"
 	@echo "... clases/Pengo.o"
 	@echo "... clases/Pengo.i"
 	@echo "... clases/Pengo.s"

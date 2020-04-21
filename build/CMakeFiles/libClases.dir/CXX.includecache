@@ -47,6 +47,8 @@ Snobee.h
 /home/vermia/pengo/clases/Snobee.h
 Timer.h
 /home/vermia/pengo/clases/Timer.h
+Huevo.h
+/home/vermia/pengo/clases/Huevo.h
 
 /home/vermia/pengo/clases/Hielo.cc
 Hielo.h
@@ -61,6 +63,16 @@ Entity.h
 /home/vermia/pengo/clases/Entity.h
 Snobee.h
 /home/vermia/pengo/clases/Snobee.h
+
+/home/vermia/pengo/clases/Huevo.cc
+Huevo.h
+/home/vermia/pengo/clases/Huevo.h
+
+/home/vermia/pengo/clases/Huevo.h
+Entity.h
+/home/vermia/pengo/clases/Entity.h
+Hielo.h
+/home/vermia/pengo/clases/Hielo.h
 
 /home/vermia/pengo/clases/Pengo.cc
 Pengo.h

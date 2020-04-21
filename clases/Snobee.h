@@ -26,7 +26,6 @@ private:
     static const float maxStunTimer;
     Hielo* llevameContigo;
     bool naciendo;
-    Timer birthTimer;
 
     
 
@@ -51,7 +50,10 @@ public:
     void updateMuerte();
     void becomeStunned();
     void birth(Hielo*);
+    void eclosiona();
     void updateBirth();
+    bool clogged(int direction);
+    bool allClogged();
 
 //GET
     Entity* asEntity(){return &entity;} 
@@ -62,6 +64,7 @@ public:
     int getFacing(){return facing;}
     bool isStunned(){return stunned;}
     bool isBirthing(){return naciendo;}
+    Hielo* getAnfitrion();
 
 
     int animAndarDerecha[maxAnimationFrames][2];
@@ -73,6 +76,7 @@ public:
     int animRomperAbajo[maxAnimationFrames][2];
     
 //SET
+    void stopBirthing(){naciendo=false;}
 
 };
 

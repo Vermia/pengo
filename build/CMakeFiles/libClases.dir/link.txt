@@ -1,2 +1,2 @@
-/usr/bin/ar qc liblibClases.a  CMakeFiles/libClases.dir/clases/Animacion.cc.o CMakeFiles/libClases.dir/clases/Entity.cc.o CMakeFiles/libClases.dir/clases/Pengo.cc.o CMakeFiles/libClases.dir/clases/Hielo.cc.o CMakeFiles/libClases.dir/clases/GameManager.cc.o CMakeFiles/libClases.dir/clases/Snobee.cc.o CMakeFiles/libClases.dir/clases/Timer.cc.o
+/usr/bin/ar qc liblibClases.a  CMakeFiles/libClases.dir/clases/Animacion.cc.o CMakeFiles/libClases.dir/clases/Entity.cc.o CMakeFiles/libClases.dir/clases/Pengo.cc.o CMakeFiles/libClases.dir/clases/Hielo.cc.o CMakeFiles/libClases.dir/clases/GameManager.cc.o CMakeFiles/libClases.dir/clases/Snobee.cc.o CMakeFiles/libClases.dir/clases/Timer.cc.o CMakeFiles/libClases.dir/clases/Huevo.cc.o
 /usr/bin/ranlib liblibClases.a

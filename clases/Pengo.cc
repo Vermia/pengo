@@ -21,7 +21,7 @@ Pengo::Pengo(int p_x, int p_y) : entity(p_x, p_y){
   dying=false;
   maxMoveTimer=8000;
   
-  entity.changeSpeed(120.0f);
+  entity.changeSpeed(100.0f);
 
   facing=4; //mirando hacia abajo
 
@@ -206,6 +206,7 @@ void Pengo::stopCheck(){
   {
   case 0:
     if(pushing) break;
+    if(entity.getAnimacion()==NULL) break;
     entity.getAnimacion()->reset();
     switch(facing){
       case 1: entity.getAnimacion()->setSecuencia(animIdleDerecha); break;

@@ -24,6 +24,7 @@ int main() {
   //////////////////
   //INITIAL STATE//
   /////////////////
+  srand(time(0));
   GameManager* game = GameManager::instancia();
  
 
@@ -31,9 +32,9 @@ int main() {
   sf::RenderWindow window(sf::VideoMode(game->getWindowW(), game->getWindowH()), game->getTitle());
   window.setView(*game->getVista());
   //Hielo hielo(40,0, spriteHielo);
-  srand(time(0));
+  
 
-  game->start( rand()%1000+3601 );
+  game->start( game->niveles[0] );
   int cycle = 0;
   bool showHitboxes=false;
 
@@ -58,80 +59,55 @@ int main() {
       case sf::Event::EventType::KeyPressed:
 
         switch (event.key.code) {
-          
-        
-        //Mostrar los rectangulos de colision de todas las entidades
-        case sf::Keyboard::M:
-          if(showHitboxes){
-            showHitboxes=false;
-          } else showHitboxes=true;
         break;
 
+        // S : Aturdir a todos los Snobees. No deben estar ya aturdidos o no funcionara (no se
+        //     resetea el temporizador)
         case sf::Keyboard::S:
           for (int i=0 ;i<maxEnemies; i++){ if(game->bees[i]==NULL) continue;
             game->bees[i]->becomeStunned();
           }
         break;
 
+        // Q : Destruir mapa y mover Snobees al borde superior. Pensado para probar los 
+        //     bordes y su funcion de aturdir
+           
         case sf::Keyboard::Q:
           for (int i=0 ;i<maxHielo; i++){ if(game->hielo[i]==NULL) continue;
             game->hielo[i]->iniciarMuerte();
           }
-        break;
-
-        //Movimiento
-        /*case sf::Keyboard::Right:
-        game->pengo->face(1);
-          if(game->canMove(1)){
-            game->pengo->move(1);
+          for(int i=0; i<maxEnemies; i++){ if(game->bees[i] == NULL) continue;
+            game->bees[i]->asEntity()->setPosition( unitW*3 + unitW*2*i +unitW, unitH/2 );
+            game->bees[i]->asEntity()->stop();
           }
         break;
-
-        case sf::Keyboard::Up:
-        game->pengo->face(2);
-          if(game->canMove(2)){
-            game->pengo->move(2);
-          }
-        break;
-
-        case sf::Keyboard::Left:
-        game->pengo->face(3);
-          if(game->canMove(3)){
-            game->pengo->move(3);
-          }
-        break;
-
-        case sf::Keyboard::Down:
-        game->pengo->face(4);
-          if(game->canMove(4)){
-            game->pengo->move(4);
-          }
-        break;*/
         
         //Empujar!!!
         case sf::Keyboard::Space:
           game->push();
         break;
 
+        //ESCAPE: Cerrar ventana
         case sf::Keyboard::Escape:
           window.close();
         break;
 
+        // N : Pasar al siguiente nivel
         case sf::Keyboard::N:
           game->victoria();
         break;
 
+        // X : Morir y despues reiniciar el nivel. Pone las vidas a 1 para perderla cuando
+        //     termine la animacion de muerte
         case sf::Keyboard::X:
           game->pengo->iniciarMuerte();
           game->setVidas(1);
         break;
 
+        // G :Inmortalidad. La X tiene prioridad sobre esto, y de hecho es la unica forma
+        //                  de morir durante la inmortalidad. Pulsarlo de nuevo lo desactiva
         case sf::Keyboard::G:
-          if(game->godmode){
-            game->godmode=false;
-          } else {
-            game->godmode=true;
-          }
+          game->toggleGodMode();
         break;
 
         default:

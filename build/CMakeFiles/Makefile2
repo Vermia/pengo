@@ -76,7 +76,7 @@ all: CMakeFiles/Pengo.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/Pengo.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/vermia/pengo/build/CMakeFiles 10
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/vermia/pengo/build/CMakeFiles 11
 	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/Pengo.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/vermia/pengo/build/CMakeFiles 0
 .PHONY : CMakeFiles/Pengo.dir/rule
@@ -103,7 +103,7 @@ clean: CMakeFiles/Pengo.dir/clean
 CMakeFiles/libClases.dir/all:
 	$(MAKE) -f CMakeFiles/libClases.dir/build.make CMakeFiles/libClases.dir/depend
 	$(MAKE) -f CMakeFiles/libClases.dir/build.make CMakeFiles/libClases.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/vermia/pengo/build/CMakeFiles --progress-num=3,4,5,6,7,8,9,10 "Built target libClases"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/vermia/pengo/build/CMakeFiles --progress-num=3,4,5,6,7,8,9,10,11 "Built target libClases"
 .PHONY : CMakeFiles/libClases.dir/all
 
 # Include target in all.
@@ -113,7 +113,7 @@ all: CMakeFiles/libClases.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/libClases.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/vermia/pengo/build/CMakeFiles 8
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/vermia/pengo/build/CMakeFiles 9
 	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/libClases.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/vermia/pengo/build/CMakeFiles 0
 .PHONY : CMakeFiles/libClases.dir/rule

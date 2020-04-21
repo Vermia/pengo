@@ -13,6 +13,7 @@
    }
 
 GameManager::GameManager() {
+    ////////////// COSAS BASICAS //////////////
     gridW=13.0f;
     gridH=15.0f;
     unitW=40.0f;
@@ -23,12 +24,20 @@ GameManager::GameManager() {
     gameover=false;
     vidas=3;
     godmode=false;
+    nullbees=0;
+    currentLevel=0;
+    lineaDiamantes=false;
+    for(int i=0 ; i<12 ; i++){
+        niveles[i] = rand()%1000+3601;
+    }
 
     bordesRosasTimer.setMax(1.0f);
 
     vista.setCenter(sf::Vector2f(windowW/2, windowH/2 - unitH*2));
     vista.setSize(sf::Vector2f(windowW + windowW/2, windowH + windowH/2));
 
+
+    //////// BORDES ////////////
     float bordeSize = 25.0f;
 
     bordeDerecha.setSize(Vector2f(bordeSize, windowH + 2*bordeSize));
@@ -47,19 +56,77 @@ GameManager::GameManager() {
     bordeAbajo.setPosition(0,windowH);
     bordeAbajo.setFillColor(Color(255,0,128));
 
+    //////////////// ENTITY ///////////////
     for(int i=0 ; i<maxHielo ; i++){
         hielo[i]=NULL;
     }
-
     for(int i=0 ; i<maxEnemies ; i++){
         bees[i]=NULL;
     }
-
     Hielo::initAnimaciones();
 
+    /////////////// TEXTURAS /////////////
     if( ! Pengo::giveTexture("resources/sheet_Pengo.png")) std::cout << "Error cargando textura de Pengo" << std::endl;
     if( ! Hielo::giveTexture("resources/sheet_Hielo.png")) std::cout << "Error cargando textura de Hielo" << std::endl;
     if(!Snobee::giveTexture("resources/sheet_Snobee.png")) std::cout << "Error cargando textura de Snobee" << std::endl;
+    if( !Huevo::giveTexture("resources/sheet_Snobee.png")) std::cout << "Error cargando textura de Snobee" << std::endl;
+
+
+    ///////////// HUD ///////////////
+    fuente.loadFromFile("resources/Roboto-Black.ttf");
+    puntos=0;
+    HUD_Puntuacion.setPosition(180,-150);
+    HUD_Puntuacion.setString( String(std::to_string(puntos)) );
+    HUD_Puntuacion.setColor( Color(255,255,255) );
+    HUD_Puntuacion.setFont( fuente );
+
+    HUD_Puntuacion_E.setPosition(0,-150);
+    HUD_Puntuacion_E.setString( String( "Puntuacion: " ) );
+    HUD_Puntuacion_E.setColor( Color(255,255,255) );
+    HUD_Puntuacion_E.setFont( fuente );
+
+    HUD_Vidas_E.setPosition(0,-100);
+    HUD_Vidas_E.setString( String( "Vidas: " ) );
+    HUD_Vidas_E.setColor( Color(255,255,255) );
+    HUD_Vidas_E.setFont( fuente );
+
+    HUD_Vida1.setTexture(*Pengo::getTextura());
+    HUD_Vida1.setTextureRect(IntRect(0*unitW,0*unitH,unitW, unitH));
+    HUD_Vida1.setPosition(100,-100);
+    //HUD_Vida1.setScale(-1,1);
+    HUD_Vida2.setTexture(*Pengo::getTextura());
+    HUD_Vida2.setTextureRect(IntRect(0*unitW,0*unitH,unitW, unitH));
+    HUD_Vida2.setPosition(150,-100);
+    //HUD_Vida2.setScale(-1,1);
+    HUD_Vida3.setTexture(*Pengo::getTextura());
+    HUD_Vida3.setTextureRect(IntRect(0*unitW,0*unitH,unitW, unitH));
+    HUD_Vida3.setPosition(200,-100);
+    //HUD_Vida3.setScale(-1,1);
+
+    HUD_currentLevel_E.setPosition(300,-100);
+    HUD_currentLevel_E.setString( String( "Nivel: " ) );
+    HUD_currentLevel_E.setColor( Color(255,255,255) );
+    HUD_currentLevel_E.setFont( fuente );
+
+    HUD_currentLevel.setPosition(400,-100);
+    HUD_currentLevel.setString( std::to_string(currentLevel) );
+    HUD_currentLevel.setColor(Color(255,255,255) );
+    HUD_currentLevel.setFont(fuente);
+
+    HUD_Seed_E.setPosition(300,-150);
+    HUD_Seed_E.setString( "Semilla: " );
+    HUD_Seed_E.setColor(Color(255,255,255) );
+    HUD_Seed_E.setFont(fuente);
+
+    HUD_Seed.setPosition(435,-150);
+    HUD_Seed.setString( std::to_string(currentSeed) );
+    HUD_Seed.setColor(Color(255,255,255) );
+    HUD_Seed.setFont(fuente);
+
+    HUD_Godmode.setPosition(0,-200);
+    HUD_Godmode.setString( "God mode OFF" );
+    HUD_Godmode.setColor(Color(128,128,128) );
+    HUD_Godmode.setFont(fuente);
 }
 
 bool GameManager::start(){
@@ -80,21 +147,23 @@ bool GameManager::start(){
     }
     //////////// MAPA DE HIELOS CREADO //////////
 
-    /////////// CREAR SNOBEES ///////////////
-    bees[0] = crearSnobee(2,2);
-    bees[1] = crearSnobee(10,2);
-    bees[2] = crearSnobee(10, 13);
-    bees[3] = crearSnobee(2, 13);
-    ////////// SNOBEES CREADOS //////////
+    bees[0]= crearSnobee(1,1);
+
+    hielo[4] ->tieneHuevo();
+    hielo[14]->tieneHuevo();
+    hielo[24]->tieneHuevo();
+
     return true;
 }
 
 bool GameManager::start(int seed){
     int pengoX=7, pengoY=6;
     pengo = crearPengo(pengoX, pengoY);
-    vidas=3;
-    currentLevel=seed;
-
+    if(vidas==0) vidas=3;
+    currentSeed=seed;
+    Hielo::totalHuevos=0;
+    Hielo::totalDiamantes=0;
+    lineaDiamantes=false;
 
     /////////// CREAR SNOBEES ///////////////
 
@@ -181,6 +250,21 @@ bool GameManager::start(int seed){
             }
         }
 
+        variance=4;
+
+        while(Hielo::totalDiamantes<maxDiamantes){
+            for(int i=0; i<maxHielo ; i++){ if(hielo[i]==NULL) continue;
+                if(Hielo::totalDiamantes>=maxDiamantes) break;;
+                if(seed%(90+variance)<2 && !hielo[i]->getHuevo()){
+                    
+                    hielo[i]->tieneDiamante();
+                }
+                variance++;
+            }
+        }
+
+        
+
     for(int i=0 ; i<gridW ; i++){
         for(int j=0 ; j<gridH ; j++){
             if(i==6 && j==7) continue;
@@ -231,15 +315,20 @@ void GameManager::update(int ciclo){
     }
     if(todosmuertos) victoria();
     
-    if(bees[afortunada]==NULL){
-        for(int i=1;i<maxHielo;i++){ if(hielo[i]==NULL) continue;
+    
+    //Crear nuevos huevos
+    if(bees[afortunada] == NULL){
+        for(int i=0 ; i<maxHielo ; i++){ if(hielo[i]==NULL) continue;
             if(hielo[i]->getHuevo() && hielo[i]->getHost()==NULL){
-                bees[afortunada]=new Snobee(hielo[i]->asEntity()->getX(), hielo[i]->asEntity()->getY());
+                bees[afortunada] = new Snobee( hielo[i]->asEntity()->getX(), hielo[i]->asEntity()->getY() );
                 bees[afortunada]->birth(hielo[i]);
                 break;
             }
         }
+        
     }
+    
+    
 
     //Colisiones
     for(int i=0; i<maxHielo ; i++){ 
@@ -272,8 +361,10 @@ void GameManager::update(int ciclo){
     }
 
     //Updates de las cosas
-    if(pengo!=NULL)
+    if(pengo!=NULL){
         pengo->update();
+    }
+        
 
     for(int i=0 ; i<maxHielo ; i++){ if(hielo[i]==NULL) continue;
         hielo[i]->update();
@@ -298,7 +389,13 @@ void GameManager::update(int ciclo){
         }
     }
 
-    
+    if(comprobarLineaDiamantes()){
+        activarLineaDiamantes();
+    }
+
+    HUD_Puntuacion.setString( std::to_string(puntos) );
+    HUD_currentLevel.setString( std::to_string(currentLevel+1) );
+    HUD_Seed.setString( std::to_string(currentSeed) );
 }
 
 bool GameManager::canMove(int direction){
@@ -328,15 +425,29 @@ void GameManager::draw(RenderWindow& window){
         }
     }
 
+    
+
     window.draw(bordeDerecha);
     window.draw(bordeArriba);
     window.draw(bordeIzquierda);
     window.draw(bordeAbajo);
+
+
+    window.draw(HUD_Puntuacion);
+    window.draw(HUD_Puntuacion_E);
+    window.draw(HUD_Vidas_E);
+    window.draw(HUD_currentLevel_E);
+    window.draw(HUD_currentLevel);
+    if(vidas>=1) window.draw(HUD_Vida1);
+    if(vidas>=2) window.draw(HUD_Vida2);
+    if(vidas>=3) window.draw(HUD_Vida3);
+    window.draw(HUD_Seed_E);
+    window.draw(HUD_Seed);
+    window.draw(HUD_Godmode);
 }
 
 bool GameManager::push(){
     int facing = pengo->getFacing();
-
     Hielo* colisionante = coliPengoHielo(facing);
 
     if(colisionante==NULL){
@@ -364,14 +475,17 @@ bool GameManager::push(){
         }
     }
     
-
-    if( (coliHieloHielo(colisionante, facing) || coliBorde(colisionante->asEntity(), facing)) && !colisionante->isDying()){
-        colisionante->iniciarMuerte();
-        return true;
-    }else{
-        colisionante->move(facing);
-        return true;
-    }
+        if( (coliHieloHielo(colisionante, facing) || coliBorde(colisionante->asEntity(), facing)) && !colisionante->isDying() && !colisionante->getDiamante() ){
+            colisionante->iniciarMuerte();
+            return true;
+        }else{
+            if(!colisionante->isDying()){
+                colisionante->move(facing);
+                return true;
+            }
+        }
+    
+    
     
 
     return false;
@@ -506,7 +620,7 @@ int GameManager::coliHieloSnobee(Hielo& hielo0, Snobee& snobee0){
             return 1;
         } else{
             snobee0.asEntity()->changeSpeed(20.0f);
-            if(!hielo0.isDying()){
+            if(!hielo0.isDying() && !hielo0.getDiamante()){
                 hielo0.iniciarMuerte();
                 switch(snobee0.getFacing()){
                     case 1:
@@ -603,18 +717,21 @@ void GameManager::quitarHieloLinea(int x, int y, int len, bool horizontal){
 }
 
 
-void GameManager::colisiones(){
-    
-}
 
 void GameManager::gameOver(){
    finish();
-   start(currentLevel);
+   start(currentSeed);
 }
 
 void GameManager::victoria(){
     finish();
-    start( rand()%1000+3601 );
+    currentLevel++;
+    if(currentLevel>11){
+        currentLevel=0;
+        vidas=3;
+        puntos=0;
+    } 
+    start( niveles[currentLevel] );
 }
 
 void GameManager::respawnPengo(){
@@ -737,5 +854,191 @@ bool GameManager::stun(int direction){
     }
      
 
+    return false;
+}
+
+bool GameManager::HayDiamante(Snobee* snobee0, int direction){
+    switch(direction){
+        case 1:
+            for(int i=0 ; i<maxHielo ; i++){ if(hielo[i]==NULL) continue;
+                if(hielo[i]->getDiamante() && hielo[i]->asEntity()->hitboxLeft.intersects( snobee0->asEntity()->hitboxRight )){
+                    return true;
+                }
+            }
+        break;
+        case 2:
+            for(int i=0 ; i<maxHielo ; i++){ if(hielo[i]==NULL) continue;
+                if(hielo[i]->getDiamante() && hielo[i]->asEntity()->hitboxDown.intersects( snobee0->asEntity()->hitboxUp )){
+                    return true;
+                }
+            }
+        break;
+        case 3:
+            for(int i=0 ; i<maxHielo ; i++){ if(hielo[i]==NULL) continue;
+                if(hielo[i]->getDiamante() && hielo[i]->asEntity()->hitboxRight.intersects( snobee0->asEntity()->hitboxLeft )){
+                    return true;
+                }
+            }
+        break;
+        case 4:
+            for(int i=0 ; i<maxHielo ; i++){ if(hielo[i]==NULL) continue;
+                if(hielo[i]->getDiamante() && hielo[i]->asEntity()->hitboxUp.intersects( snobee0->asEntity()->hitboxDown )){
+                    return true;
+                }
+            }
+        break;
+        default:break;
+    }
+    return false;
+}
+
+bool GameManager::comprobarLineaDiamantes(){
+    Hielo* diamantes[maxDiamantes];
+    for(int i=0 ; i<maxDiamantes ; i++) diamantes[i]=NULL;
+    int a=0;
+
+    for(int i=0; i<maxHielo ; i++){ if(hielo[i]==NULL) continue; 
+        if(hielo[i]->getDiamante()){
+            diamantes[a]=hielo[i];
+            a++;
+        }
+    }
+    if(diamantes[0]==NULL || diamantes[1]==NULL || diamantes[2]==NULL) return false;
+    ////// HORIZONTAL
+    // CENTRO 0
+    if(diamantes[0]->asEntity()->hitboxLeft.intersects( diamantes[1]->asEntity()->hitboxRight)
+    && diamantes[0]->asEntity()->hitboxRight.intersects( diamantes[2]->asEntity()->hitboxLeft )){
+        return true;
+    }
+    if(diamantes[0]->asEntity()->hitboxLeft.intersects( diamantes[2]->asEntity()->hitboxRight)
+    && diamantes[0]->asEntity()->hitboxRight.intersects( diamantes[1]->asEntity()->hitboxLeft )){
+        return true;
+    }
+
+    //CENTRO 1
+    if(diamantes[1]->asEntity()->hitboxLeft.intersects( diamantes[0]->asEntity()->hitboxRight)
+    && diamantes[1]->asEntity()->hitboxRight.intersects( diamantes[2]->asEntity()->hitboxLeft )){
+        return true;
+    }
+    if(diamantes[1]->asEntity()->hitboxLeft.intersects( diamantes[2]->asEntity()->hitboxRight)
+    && diamantes[1]->asEntity()->hitboxRight.intersects( diamantes[0]->asEntity()->hitboxLeft )){
+        return true;
+    }
+
+    //CENTRO 2
+    if(diamantes[2]->asEntity()->hitboxLeft.intersects( diamantes[0]->asEntity()->hitboxRight)
+    && diamantes[2]->asEntity()->hitboxRight.intersects( diamantes[1]->asEntity()->hitboxLeft )){
+        return true;
+    }
+    if(diamantes[2]->asEntity()->hitboxLeft.intersects( diamantes[1]->asEntity()->hitboxRight)
+    && diamantes[2]->asEntity()->hitboxRight.intersects( diamantes[0]->asEntity()->hitboxLeft )){
+        return true;
+    }
+
+    /////////VERTICAL
+    // CENTRO 0
+    if(diamantes[0]->asEntity()->hitboxUp.intersects( diamantes[1]->asEntity()->hitboxDown)
+    && diamantes[0]->asEntity()->hitboxDown.intersects( diamantes[2]->asEntity()->hitboxUp )){
+        return true;
+    }
+    if(diamantes[0]->asEntity()->hitboxUp.intersects( diamantes[2]->asEntity()->hitboxRight)
+    && diamantes[0]->asEntity()->hitboxDown.intersects( diamantes[1]->asEntity()->hitboxUp )){
+        return true;
+    }
+
+    //CENTRO 1
+    if(diamantes[1]->asEntity()->hitboxUp.intersects( diamantes[0]->asEntity()->hitboxDown)
+    && diamantes[1]->asEntity()->hitboxDown.intersects( diamantes[2]->asEntity()->hitboxUp )){
+        return true;
+    }
+    if(diamantes[1]->asEntity()->hitboxUp.intersects( diamantes[2]->asEntity()->hitboxDown)
+    && diamantes[1]->asEntity()->hitboxDown.intersects( diamantes[0]->asEntity()->hitboxUp )){
+        return true;
+    }
+
+    //CENTRO 2
+    if(diamantes[2]->asEntity()->hitboxUp.intersects( diamantes[0]->asEntity()->hitboxDown)
+    && diamantes[2]->asEntity()->hitboxDown.intersects( diamantes[1]->asEntity()->hitboxUp )){
+        return true;
+    }
+    if(diamantes[2]->asEntity()->hitboxUp.intersects( diamantes[1]->asEntity()->hitboxDown)
+    && diamantes[2]->asEntity()->hitboxDown.intersects( diamantes[0]->asEntity()->hitboxUp )){
+        return true;
+    }
+
+    return false;
+}
+
+void GameManager::activarLineaDiamantes(){
+    if(!lineaDiamantes){
+        lineaDiamantes=true;
+        for(int i=0; i<maxEnemies ; i++){ if(bees[i]==NULL) continue;
+            bees[i]->becomeStunned();
+        }
+        incrementarPuntos(3500);
+    }
+    
+
+    Hielo* diamantes[maxDiamantes];
+    int a=0;
+    for(int i=0; i<maxHielo ; i++){ if(hielo[i]==NULL) continue; 
+        if(hielo[i]->getDiamante()){
+            diamantes[a]=hielo[i];
+            diamantes[a]->asEntity()->setSprite(3,0);
+            a++;
+        }
+    }
+
+}
+
+void GameManager::toggleGodMode(){
+    if(!godmode){
+        godmode=true;
+        HUD_Godmode.setColor( Color(255,255,0));
+        HUD_Godmode.setString( "God mode ON" );
+    } else{
+        godmode=false;
+        HUD_Godmode.setColor( Color(128,128,128));
+        HUD_Godmode.setString( "God mode OFF" );
+    }
+}
+
+bool GameManager::coliSnobeeSnobee(Snobee* snobee0, int direction){
+    if(snobee0==NULL) return false;
+    switch(direction){
+        case 1:
+            for(int i=0 ; i<maxEnemies; i++){ if(bees[i]==NULL) continue;
+                if(bees[i]->asEntity()->hitboxRight.intersects( snobee0->asEntity()->hitboxLeft )){
+                    return true;
+                }
+            }
+        break;
+
+        case 2:
+            for(int i=0 ; i<maxEnemies; i++){ if(bees[i]==NULL) continue;
+                if(bees[i]->asEntity()->hitboxUp.intersects( snobee0->asEntity()->hitboxDown )){
+                    return true;
+                }
+            }
+        break;
+
+        case 3:
+            for(int i=0 ; i<maxEnemies; i++){ if(bees[i]==NULL) continue;
+                if(bees[i]->asEntity()->hitboxLeft.intersects( snobee0->asEntity()->hitboxRight )){
+                    return true;
+                }
+            }
+        break;
+
+        case 4:
+            for(int i=0 ; i<maxEnemies; i++){ if(bees[i]==NULL) continue;
+                if(bees[i]->asEntity()->hitboxDown.intersects( snobee0->asEntity()->hitboxUp )){
+                    return true;
+                }
+            }
+        break;
+
+        default:break;
+    }
     return false;
 }

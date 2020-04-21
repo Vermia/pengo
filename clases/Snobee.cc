@@ -2,10 +2,10 @@
 
 #include "GameManager.h"
 
-#define enemySpeed 30.0f
+#define enemySpeed 90.0f
 
 sf::Texture* Snobee::textura = new sf::Texture();
-const float Snobee::maxStunTimer = 5.0f;
+const float Snobee::maxStunTimer = 12.5f;
 
 bool Snobee::giveTexture(String file){
   return textura->loadFromFile(file);
@@ -69,7 +69,7 @@ Snobee::Snobee(float p_x, float p_y) : entity(p_x, p_y){
     hitboxV.setFillColor(Color(255,0,0,128));
     entity.changeSpeed(enemySpeed);
     stunned=false;
-    //Animanciones
+    //Animaciones
    entity.getAnimacion()->reset();
 
 
@@ -105,10 +105,22 @@ Snobee::Snobee(float p_x, float p_y) : entity(p_x, p_y){
     animNacer[1][0] = 5; animNacer[1][1] = 0;
     animNacer[2][0] = 6; animNacer[2][1] = 0;
     animNacer[3][0] =-1; animNacer[3][1] =-1;
+
+    
 }
 
 Snobee::~Snobee(){
-
+  GameManager* game = GameManager::instancia();
+  if(game->pengo!=NULL && !game->pengo->isDying()){
+    if(!naciendo){
+      if(stunned){
+        game->incrementarPuntos(100);
+      }else{
+        game->incrementarPuntos(400);
+      }
+    }
+    
+  }
 }
 
 void Snobee::draw(RenderWindow &window){
@@ -117,11 +129,11 @@ void Snobee::draw(RenderWindow &window){
 
 void Snobee::update(){
   GameManager* game = GameManager::instancia();
-    if(!dying && !stunned && !naciendo){
+    if(!dying && !stunned && !naciendo && !allClogged()){
         if(!entity.getMovingState()){
 
         int direction = rand()%4+1;
-        while (game->coliBorde(&entity, direction)){
+        while (clogged(direction)){
           direction = rand()%4+1;
         }
         move(direction);
@@ -177,8 +189,6 @@ void Snobee::updateHitbox(){
     hitbox.width = uw - 2*cota;
     hitbox.height = uh - 2*cota;
 
-    hitboxV.setPosition(hitbox.left, hitbox.top);
-    hitboxV.setSize(Vector2f(hitbox.width, hitbox.height));
 }
 
 void Snobee::destroy(){
@@ -316,25 +326,74 @@ void Snobee::updateMuerte(){
       break;
     }
   }else {
-    killme=true;
+    destroy();
   }
 }
 
 void Snobee::becomeStunned(){
-  stunned=true;
-  entity.getAnimacion()->reset();
-  entity.getAnimacion()->setSecuencia( animStun );
+  if(!naciendo){
+    stunned=true;
+    entity.getAnimacion()->reset();
+    entity.getAnimacion()->setSecuencia( animStun );
+  }
 }
 
 void Snobee::birth(Hielo* lugar){
   naciendo=true;
   entity.getAnimacion()->reset();
+  entity.getAnimacion()->setBehavior(5);
   entity.getAnimacion()->setSecuencia( animNacer );
-  entity.getAnimacion()->setMaxTimer(1.75);
+  entity.getAnimacion()->setMaxTimer(5.0f);
   lugar->setHost(this);
 }
 
 void Snobee::updateBirth(){
+  GameManager* game = GameManager::instancia(); 
+  Hielo* hielo = NULL;
+  for(int i; i<maxHielo ; i++){ if(game->hielo[i]==NULL) continue;
+    if(this==game->hielo[i]->getHost()){
+      hielo=game->hielo[i];
+      break;
+    }
+  }
+  if(hielo!=NULL){
+    entity.setPosition( hielo->asEntity()->getX(), hielo->asEntity()->getY() );
+  }
   entity.updateAnimacion();
-  
+}
+
+void Snobee::eclosiona(){
+  GameManager* game = GameManager::instancia();
+
+  for(int i=0 ; i<maxEnemies ; i++){
+    if(game->bees[i]==this){
+      delete this;
+      game->bees[i] = new Snobee( entity.getX(), entity.getY() );
+    }
+  }
+}
+
+bool Snobee::clogged(int direction){
+  GameManager* game = GameManager::instancia();
+  if(game->coliSnobeeSnobee(this, direction)){
+    return true;
+  }
+
+  if(game->coliBorde(asEntity(), direction)){
+    return true;
+  }
+
+  if(game->HayDiamante(this, direction)){
+    return true;
+  }
+
+  return false;
+}
+
+bool Snobee::allClogged(){
+  if(clogged(1) && clogged(2) && clogged(3) && clogged(4)){
+    return true;
+  }
+
+  return false;
 }

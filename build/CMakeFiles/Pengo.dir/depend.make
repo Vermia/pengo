@@ -5,6 +5,7 @@ CMakeFiles/Pengo.dir/main.cpp.o: ../clases/Animacion.h
 CMakeFiles/Pengo.dir/main.cpp.o: ../clases/Entity.h
 CMakeFiles/Pengo.dir/main.cpp.o: ../clases/GameManager.h
 CMakeFiles/Pengo.dir/main.cpp.o: ../clases/Hielo.h
+CMakeFiles/Pengo.dir/main.cpp.o: ../clases/Huevo.h
 CMakeFiles/Pengo.dir/main.cpp.o: ../clases/Pengo.h
 CMakeFiles/Pengo.dir/main.cpp.o: ../clases/Snobee.h
 CMakeFiles/Pengo.dir/main.cpp.o: ../clases/Timer.h

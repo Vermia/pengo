@@ -6,6 +6,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/libClases.dir/clases/GameManager.cc.o"
   "CMakeFiles/libClases.dir/clases/Snobee.cc.o"
   "CMakeFiles/libClases.dir/clases/Timer.cc.o"
+  "CMakeFiles/libClases.dir/clases/Huevo.cc.o"
   "liblibClases.pdb"
   "liblibClases.a"
 )

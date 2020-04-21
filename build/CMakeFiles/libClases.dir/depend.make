@@ -6,6 +6,7 @@ CMakeFiles/libClases.dir/clases/Animacion.cc.o: ../clases/Animacion.h
 CMakeFiles/libClases.dir/clases/Animacion.cc.o: ../clases/Entity.h
 CMakeFiles/libClases.dir/clases/Animacion.cc.o: ../clases/GameManager.h
 CMakeFiles/libClases.dir/clases/Animacion.cc.o: ../clases/Hielo.h
+CMakeFiles/libClases.dir/clases/Animacion.cc.o: ../clases/Huevo.h
 CMakeFiles/libClases.dir/clases/Animacion.cc.o: ../clases/Pengo.h
 CMakeFiles/libClases.dir/clases/Animacion.cc.o: ../clases/Snobee.h
 CMakeFiles/libClases.dir/clases/Animacion.cc.o: ../clases/Timer.h
@@ -15,6 +16,7 @@ CMakeFiles/libClases.dir/clases/Entity.cc.o: ../clases/Entity.cc
 CMakeFiles/libClases.dir/clases/Entity.cc.o: ../clases/Entity.h
 CMakeFiles/libClases.dir/clases/Entity.cc.o: ../clases/GameManager.h
 CMakeFiles/libClases.dir/clases/Entity.cc.o: ../clases/Hielo.h
+CMakeFiles/libClases.dir/clases/Entity.cc.o: ../clases/Huevo.h
 CMakeFiles/libClases.dir/clases/Entity.cc.o: ../clases/Pengo.h
 CMakeFiles/libClases.dir/clases/Entity.cc.o: ../clases/Snobee.h
 CMakeFiles/libClases.dir/clases/Entity.cc.o: ../clases/Timer.h
@@ -24,6 +26,7 @@ CMakeFiles/libClases.dir/clases/GameManager.cc.o: ../clases/Entity.h
 CMakeFiles/libClases.dir/clases/GameManager.cc.o: ../clases/GameManager.cc
 CMakeFiles/libClases.dir/clases/GameManager.cc.o: ../clases/GameManager.h
 CMakeFiles/libClases.dir/clases/GameManager.cc.o: ../clases/Hielo.h
+CMakeFiles/libClases.dir/clases/GameManager.cc.o: ../clases/Huevo.h
 CMakeFiles/libClases.dir/clases/GameManager.cc.o: ../clases/Pengo.h
 CMakeFiles/libClases.dir/clases/GameManager.cc.o: ../clases/Snobee.h
 CMakeFiles/libClases.dir/clases/GameManager.cc.o: ../clases/Timer.h
@@ -33,14 +36,24 @@ CMakeFiles/libClases.dir/clases/Hielo.cc.o: ../clases/Entity.h
 CMakeFiles/libClases.dir/clases/Hielo.cc.o: ../clases/GameManager.h
 CMakeFiles/libClases.dir/clases/Hielo.cc.o: ../clases/Hielo.cc
 CMakeFiles/libClases.dir/clases/Hielo.cc.o: ../clases/Hielo.h
+CMakeFiles/libClases.dir/clases/Hielo.cc.o: ../clases/Huevo.h
 CMakeFiles/libClases.dir/clases/Hielo.cc.o: ../clases/Pengo.h
 CMakeFiles/libClases.dir/clases/Hielo.cc.o: ../clases/Snobee.h
 CMakeFiles/libClases.dir/clases/Hielo.cc.o: ../clases/Timer.h
+
+CMakeFiles/libClases.dir/clases/Huevo.cc.o: ../clases/Animacion.h
+CMakeFiles/libClases.dir/clases/Huevo.cc.o: ../clases/Entity.h
+CMakeFiles/libClases.dir/clases/Huevo.cc.o: ../clases/Hielo.h
+CMakeFiles/libClases.dir/clases/Huevo.cc.o: ../clases/Huevo.cc
+CMakeFiles/libClases.dir/clases/Huevo.cc.o: ../clases/Huevo.h
+CMakeFiles/libClases.dir/clases/Huevo.cc.o: ../clases/Snobee.h
+CMakeFiles/libClases.dir/clases/Huevo.cc.o: ../clases/Timer.h
 
 CMakeFiles/libClases.dir/clases/Pengo.cc.o: ../clases/Animacion.h
 CMakeFiles/libClases.dir/clases/Pengo.cc.o: ../clases/Entity.h
 CMakeFiles/libClases.dir/clases/Pengo.cc.o: ../clases/GameManager.h
 CMakeFiles/libClases.dir/clases/Pengo.cc.o: ../clases/Hielo.h
+CMakeFiles/libClases.dir/clases/Pengo.cc.o: ../clases/Huevo.h
 CMakeFiles/libClases.dir/clases/Pengo.cc.o: ../clases/Pengo.cc
 CMakeFiles/libClases.dir/clases/Pengo.cc.o: ../clases/Pengo.h
 CMakeFiles/libClases.dir/clases/Pengo.cc.o: ../clases/Snobee.h
@@ -50,6 +63,7 @@ CMakeFiles/libClases.dir/clases/Snobee.cc.o: ../clases/Animacion.h
 CMakeFiles/libClases.dir/clases/Snobee.cc.o: ../clases/Entity.h
 CMakeFiles/libClases.dir/clases/Snobee.cc.o: ../clases/GameManager.h
 CMakeFiles/libClases.dir/clases/Snobee.cc.o: ../clases/Hielo.h
+CMakeFiles/libClases.dir/clases/Snobee.cc.o: ../clases/Huevo.h
 CMakeFiles/libClases.dir/clases/Snobee.cc.o: ../clases/Pengo.h
 CMakeFiles/libClases.dir/clases/Snobee.cc.o: ../clases/Snobee.cc
 CMakeFiles/libClases.dir/clases/Snobee.cc.o: ../clases/Snobee.h
@@ -59,6 +73,7 @@ CMakeFiles/libClases.dir/clases/Timer.cc.o: ../clases/Animacion.h
 CMakeFiles/libClases.dir/clases/Timer.cc.o: ../clases/Entity.h
 CMakeFiles/libClases.dir/clases/Timer.cc.o: ../clases/GameManager.h
 CMakeFiles/libClases.dir/clases/Timer.cc.o: ../clases/Hielo.h
+CMakeFiles/libClases.dir/clases/Timer.cc.o: ../clases/Huevo.h
 CMakeFiles/libClases.dir/clases/Timer.cc.o: ../clases/Pengo.h
 CMakeFiles/libClases.dir/clases/Timer.cc.o: ../clases/Snobee.h
 CMakeFiles/libClases.dir/clases/Timer.cc.o: ../clases/Timer.cc

@@ -8,13 +8,16 @@
 #include "Pengo.h"
 #include "Snobee.h"
 #include "Timer.h"
+#include "Huevo.h"
 
 #define maxHielo 200
 #define maxEnemies 4
+#define maxHuevos 3
 
 class GameManager
 {
 public:
+    int niveles[12];  
     static GameManager* instancia();
     Pengo* pengo;
     Hielo* hielo[maxHielo];
@@ -22,7 +25,7 @@ public:
     bool gameover;
     float deltaTime;
 private:
-
+    sf::Font fuente;
     static GameManager* p_instancia;
 
     float windowW;
@@ -34,6 +37,12 @@ private:
     sf::String title;
     int vidas;
     int currentLevel;
+    int currentSeed;
+    bool godmode;
+
+    int nullbees;
+    int totalbees;
+    bool lineaDiamantes;
 
     Timer bordesRosasTimer;
 
@@ -43,6 +52,19 @@ private:
     sf::RectangleShape bordeAbajo;
 
     sf::View vista;
+
+    Text HUD_Puntuacion_E;
+    Text HUD_Puntuacion;
+    Text HUD_Vidas_E;
+    int puntos;
+    Sprite HUD_Vida1;
+    Sprite HUD_Vida2;
+    Sprite HUD_Vida3;
+    Text HUD_currentLevel_E;
+    Text HUD_currentLevel;
+    Text HUD_Seed_E;
+    Text HUD_Seed;
+    Text HUD_Godmode;
 
 protected:
 
@@ -65,10 +87,16 @@ protected:
 
     Hielo* coliPengoHielo(int direction);
     bool coliHieloHielo(Hielo*, int direction);
-    int coliPengoSnobee(); //0: Sin colision, 1: Pengo pierde, 2: Pengo gana
+    int  coliPengoSnobee(); //0: Sin colision, 1: Pengo pierde, 2: Pengo gana
     int  coliHieloSnobee(Hielo&, Snobee&);
     bool coliPengoBorde(int direction);
+    bool coliSnobeeSnobee(Snobee*, int direction);
     bool coliBorde(Entity*, int direction);
+
+
+    bool HayDiamante(Snobee*, int direction);
+    bool comprobarLineaDiamantes();
+    void activarLineaDiamantes();
 
     void draw(RenderWindow&);
     bool push();
@@ -83,7 +111,6 @@ protected:
     int buscarHielo(int, int);
     Snobee* buscarSnobee(int, int);
 
-    bool godmode;
 
 
     //GET
@@ -101,6 +128,8 @@ protected:
     bool setGrid( int p_gridW, int p_gridH );
     void perderVida(){vidas--; std::cout<<vidas<<std::endl;}
     void setVidas(int p_vidas){vidas=p_vidas;}
+    void incrementarPuntos(int p_puntos){puntos+=p_puntos;}
+    void toggleGodMode();
 };
 
 

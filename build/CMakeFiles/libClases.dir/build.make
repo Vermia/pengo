@@ -225,6 +225,30 @@ CMakeFiles/libClases.dir/clases/Timer.cc.o.provides: CMakeFiles/libClases.dir/cl
 CMakeFiles/libClases.dir/clases/Timer.cc.o.provides.build: CMakeFiles/libClases.dir/clases/Timer.cc.o
 
 
+CMakeFiles/libClases.dir/clases/Huevo.cc.o: CMakeFiles/libClases.dir/flags.make
+CMakeFiles/libClases.dir/clases/Huevo.cc.o: ../clases/Huevo.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/vermia/pengo/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/libClases.dir/clases/Huevo.cc.o"
+	/usr/bin/g++-5   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/libClases.dir/clases/Huevo.cc.o -c /home/vermia/pengo/clases/Huevo.cc
+
+CMakeFiles/libClases.dir/clases/Huevo.cc.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/libClases.dir/clases/Huevo.cc.i"
+	/usr/bin/g++-5  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/vermia/pengo/clases/Huevo.cc > CMakeFiles/libClases.dir/clases/Huevo.cc.i
+
+CMakeFiles/libClases.dir/clases/Huevo.cc.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/libClases.dir/clases/Huevo.cc.s"
+	/usr/bin/g++-5  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/vermia/pengo/clases/Huevo.cc -o CMakeFiles/libClases.dir/clases/Huevo.cc.s
+
+CMakeFiles/libClases.dir/clases/Huevo.cc.o.requires:
+
+.PHONY : CMakeFiles/libClases.dir/clases/Huevo.cc.o.requires
+
+CMakeFiles/libClases.dir/clases/Huevo.cc.o.provides: CMakeFiles/libClases.dir/clases/Huevo.cc.o.requires
+	$(MAKE) -f CMakeFiles/libClases.dir/build.make CMakeFiles/libClases.dir/clases/Huevo.cc.o.provides.build
+.PHONY : CMakeFiles/libClases.dir/clases/Huevo.cc.o.provides
+
+CMakeFiles/libClases.dir/clases/Huevo.cc.o.provides.build: CMakeFiles/libClases.dir/clases/Huevo.cc.o
+
+
 # Object files for target libClases
 libClases_OBJECTS = \
 "CMakeFiles/libClases.dir/clases/Animacion.cc.o" \
@@ -233,7 +257,8 @@ libClases_OBJECTS = \
 "CMakeFiles/libClases.dir/clases/Hielo.cc.o" \
 "CMakeFiles/libClases.dir/clases/GameManager.cc.o" \
 "CMakeFiles/libClases.dir/clases/Snobee.cc.o" \
-"CMakeFiles/libClases.dir/clases/Timer.cc.o"
+"CMakeFiles/libClases.dir/clases/Timer.cc.o" \
+"CMakeFiles/libClases.dir/clases/Huevo.cc.o"
 
 # External object files for target libClases
 libClases_EXTERNAL_OBJECTS =
@@ -245,9 +270,10 @@ liblibClases.a: CMakeFiles/libClases.dir/clases/Hielo.cc.o
 liblibClases.a: CMakeFiles/libClases.dir/clases/GameManager.cc.o
 liblibClases.a: CMakeFiles/libClases.dir/clases/Snobee.cc.o
 liblibClases.a: CMakeFiles/libClases.dir/clases/Timer.cc.o
+liblibClases.a: CMakeFiles/libClases.dir/clases/Huevo.cc.o
 liblibClases.a: CMakeFiles/libClases.dir/build.make
 liblibClases.a: CMakeFiles/libClases.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/vermia/pengo/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Linking CXX static library liblibClases.a"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/vermia/pengo/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Linking CXX static library liblibClases.a"
 	$(CMAKE_COMMAND) -P CMakeFiles/libClases.dir/cmake_clean_target.cmake
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/libClases.dir/link.txt --verbose=$(VERBOSE)
 
@@ -263,6 +289,7 @@ CMakeFiles/libClases.dir/requires: CMakeFiles/libClases.dir/clases/Hielo.cc.o.re
 CMakeFiles/libClases.dir/requires: CMakeFiles/libClases.dir/clases/GameManager.cc.o.requires
 CMakeFiles/libClases.dir/requires: CMakeFiles/libClases.dir/clases/Snobee.cc.o.requires
 CMakeFiles/libClases.dir/requires: CMakeFiles/libClases.dir/clases/Timer.cc.o.requires
+CMakeFiles/libClases.dir/requires: CMakeFiles/libClases.dir/clases/Huevo.cc.o.requires
 
 .PHONY : CMakeFiles/libClases.dir/requires
 

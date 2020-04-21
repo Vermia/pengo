@@ -7,6 +7,7 @@ target_sources(libClases PRIVATE
     "${CMAKE_CURRENT_SOURCE_DIR}/GameManager.cc"
     "${CMAKE_CURRENT_SOURCE_DIR}/Snobee.cc"
     "${CMAKE_CURRENT_SOURCE_DIR}/Timer.cc"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Huevo.cc"
 )
 
 #Y donde se encuentran los .h

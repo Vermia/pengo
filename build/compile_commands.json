@@ -38,5 +38,10 @@
   "directory": "/home/vermia/pengo/build",
   "command": "/usr/bin/g++-5    -I/home/vermia/pengo/clases   -std=c++1y -Wall -Wextra -g   -o CMakeFiles/libClases.dir/clases/Timer.cc.o -c /home/vermia/pengo/clases/Timer.cc",
   "file": "/home/vermia/pengo/clases/Timer.cc"
+},
+{
+  "directory": "/home/vermia/pengo/build",
+  "command": "/usr/bin/g++-5    -I/home/vermia/pengo/clases   -std=c++1y -Wall -Wextra -g   -o CMakeFiles/libClases.dir/clases/Huevo.cc.o -c /home/vermia/pengo/clases/Huevo.cc",
+  "file": "/home/vermia/pengo/clases/Huevo.cc"
 }
 ]

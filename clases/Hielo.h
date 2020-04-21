@@ -8,6 +8,7 @@
 using namespace sf;
 
 #define maxHuevos 3
+#define maxDiamantes 3
 class Snobee;
 
 class Hielo
@@ -22,6 +23,7 @@ private:
     RectangleShape hitboxV;
     bool huevo;
     bool dying;
+    bool diamante;
 
     Snobee* host;
 public:
@@ -46,9 +48,12 @@ public:
     FloatRect getHitbox(){return hitbox;}
     RectangleShape getHitboxV(){return hitboxV;}
     static int totalHuevos;
+    static int totalDiamantes;
     bool getHuevo(){return huevo;}
+    bool getDiamante(){return diamante;}
     bool isDying(){return dying;}
     Snobee* getHost(){return host;}
+
 
     static int animSerDestruido[maxAnimationFrames][2];
     static void initAnimaciones();
@@ -56,6 +61,7 @@ public:
 
     //SET
     void tieneHuevo();
+    void tieneDiamante();
     void iniciarMuerte();
     void setHost(Snobee* p_host){host=p_host;}
 };
